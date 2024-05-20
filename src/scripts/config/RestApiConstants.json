@@ -1,0 +1,50 @@
+{
+  "N_AUTH": {
+    "code": 401,
+    "description": "User authentication revoke"
+  },
+  "USER_N_FOUND": {
+    "code": 402,
+    "description": "User not found"
+  },
+  "USER_AL_VER": {
+    "code": 403,
+    "description": "User already verified"
+  },
+  "UN_SEND_EMAIL": {
+    "code": 404,
+    "description": "Unable to send email"
+  },
+  "OUT_BOUND": {
+    "code": 405,
+    "description": "User authorization out of boundary"
+  },
+  "UN_COM_REQ": {
+    "code": 406,
+    "description": "Unable to complete request"
+  },
+  "OPTION_NOT_FOUND": {
+    "code": 407,
+    "description": "Option not found"
+  },
+  "W_CON_CODE": {
+    "code": 408,
+    "description": "Wrong confirmation code or email"
+  },
+  "CODE_EXPIRED": {
+    "code": 409,
+    "description": "Email confirmation code expired"
+  },
+  "USER_EXISTED": {
+    "code": 410,
+    "description": "User already created"
+  },
+  "UNVERIFIED": {
+    "code": 411,
+    "description": "Unverified"
+  },
+  "EMAIL_UNV": {
+    "code": 411,
+    "description": "Email not verified"
+  }
+}

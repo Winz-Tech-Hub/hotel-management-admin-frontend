@@ -1,0 +1,36 @@
+name: Create tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:    
+    - name: Setup enviroment                
+      run: |
+        git config --global user.email "winztechhub@gmail.com"
+        git config --global user.name "Winz Tech Hub Ci"
+
+    - name: Creating tag
+      run: |
+        BETTING_PLATFORM_DEPLOYMENT_KEY="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"
+        cd ../
+        git clone https://$BETTING_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/betting-platform-admin-frontend-react.git
+        cd betting-platform-admin-frontend-react
+
+        CURRENT_VERSION=$(jq -r '.version' package.json)
+        
+        # Create the new tag name using the original version from package.json
+        NEW_TAG="v${CURRENT_VERSION}"
+
+        # Echo the new tag name
+        echo "New tag name: $NEW_TAG"
+
+        # Create the tag and push it
+        git tag -a "$NEW_TAG" -m "Version $NEW_TAG"
+        git add .
+        git commit -m "Create tag"
+        git push --tags
+

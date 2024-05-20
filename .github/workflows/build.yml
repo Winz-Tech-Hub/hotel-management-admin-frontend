@@ -1,0 +1,46 @@
+name: Build to production repo
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup enviroment
+        run: |
+          git config --global user.email "winztechhub@gmail.com"
+          git config --global user.name "Winz Tech Hub Ci"
+
+      - name: Build
+        run: |
+          export CI=false
+          npm install -f 
+          npm run build
+
+      - name: Push to production
+        run: |
+          BETTING_PLATFORM_DEPLOYMENT_KEY="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"
+          cd ../
+          git clone https://$BETTING_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/betting-platform-admin-frontend-react-production.git
+          cd betting-platform-admin-frontend-react-production
+          sudo cp -r ./.git  ../
+          sudo rm -rf *
+          sudo cp -r ../.git ./
+          cp -a ../betting-platform-admin-frontend-react/build/. ./
+          git add .
+          git commit -m "Deploy build output - $(date)"
+          git push

@@ -1,0 +1,264 @@
+/*
+* demo.css
+* File include item demo only specific css only
+******************************************************************************/
+
+.menu .app-brand.demo {
+  height: 64px;
+  /*margin-top: 12px;*/
+}
+
+.app-brand-logo.demo svg {
+  width: 22px;
+  height: 38px;
+}
+
+.app-brand-text.demo {
+  font-size: 1.75rem;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+}
+
+/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
+/* Detached navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 76px !important;
+}
+
+/* Default navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
+  padding-top: 64px !important;
+}
+
+/* Navbar page z-index issue solution */
+.content-wrapper .navbar {
+  z-index: auto;
+}
+
+/*
+* Content
+******************************************************************************/
+
+.demo-blocks > * {
+  display: block !important;
+}
+
+.demo-inline-spacing > * {
+  margin: 1rem 0.375rem 0 0 !important;
+}
+
+/* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
+.demo-vertical-spacing > * {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+
+.demo-vertical-spacing.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-lg > * {
+  margin-top: 1.875rem !important;
+  margin-bottom: 0 !important;
+}
+
+.demo-vertical-spacing-lg.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-xl > * {
+  margin-top: 5rem !important;
+  margin-bottom: 0 !important;
+}
+
+.demo-vertical-spacing-xl.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.rtl-only {
+  display: none !important;
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+[dir='rtl'] .rtl-only {
+  display: block !important;
+}
+
+/*
+* Layout demo
+******************************************************************************/
+
+.layout-demo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.layout-demo-placeholder img {
+  width: 900px;
+}
+
+.layout-demo-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.alert {
+  -webkit-transition: all 300ms linear;
+  -moz-transition: all 300ms linear;
+  -o-transition: all 300ms linear;
+  -ms-transition: all 300ms linear;
+  transition: all 300ms linear;
+}
+
+.alert {
+  border: 0;
+  border-radius: 0;
+  /* color: #FFFFFF; */
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.container .alert {
+  border-radius: 4px;
+}
+
+.navbar .alert {
+  border-radius: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 85px;
+  width: 100%;
+  z-index: 3;
+}
+
+.navbar:not(.navbar-transparent) .alert {
+  top: 70px;
+}
+
+.alert span[data-notify='icon'] {
+  font-size: 30px;
+  display: block;
+  left: 15px;
+  position: absolute;
+  top: 50%;
+  margin-top: -15px;
+}
+
+.alert i.nc-simple-remove {
+  font-size: 12px !important;
+  font: bold normal normal 14px/1 'nucleo-icons';
+}
+
+.alert button.close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -13px;
+  z-index: 1033;
+  background-color: #ffffff;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+  line-height: 9px;
+  width: 25px;
+  height: 25px;
+  outline: 0 !important;
+  border: 0;
+  text-align: center;
+  padding: 3px;
+  font-weight: 900;
+}
+
+.alert button.close:hover {
+  opacity: 0.55;
+}
+
+.alert .close ~ span {
+  display: block;
+  max-width: 89%;
+}
+
+.alert[data-notify='container'] {
+  padding: 10px 10px 10px 20px;
+  border-radius: 4px;
+}
+
+.alert.alert-with-icon {
+  padding-left: 65px;
+}
+
+.card .alert {
+  border-radius: 4px;
+  position: relative;
+}
+
+.card .alert.alert-with-icon {
+  padding-left: 65px;
+}
+
+.rna-container .alert {
+  border-radius: 4px;
+}
+
+.rna-container .alert button.close {
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rna-container .alert button.close span {
+  margin-top: -4px;
+}
+
+.docker .active {
+  border-top: ridge;
+  color: #696cff;
+  background-color: rgba(105, 108, 255, 0.16);
+}
+
+.gain-header {
+  font-size: 12px;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+@media only screen and (max-width: 768px) {
+  h4 {
+    font-size: 16px;
+  }
+  .gain-header {
+    font-size: 9px;
+  }
+  .gain-trade-label {
+    display: none;
+  }
+  .gain-profit {
+    font-size: 9px;
+  }
+}
+
+.bb-s {
+  border-bottom: solid;
+}
+
+.c-pointer {
+  cursor: pointer;
+}
