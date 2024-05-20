@@ -26,11 +26,6 @@ const dashboardRoutes = [
     icon: 'fas fa-gears',
   },
   {
-    path: '/setting',
-    name: 'Setting',
-    icon: 'fas fa-cog',
-  },
-  {
     path: '/git',
     name: 'Git',
     icon: 'fas fa-gears',

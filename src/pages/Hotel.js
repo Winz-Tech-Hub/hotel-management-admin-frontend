@@ -7,6 +7,7 @@ import Reciept from '../components/tabs/hotel/Reciept'
 import Customer from '../components/tabs/hotel/Customer'
 import Room from '../components/tabs/hotel/Room'
 import RoomCategory from '../components/tabs/hotel/RoomCategory'
+import Inventory from '../components/tabs/hotel/Inventory'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Hotel(__props) {
@@ -45,6 +46,12 @@ function Hotel(__props) {
                       label="Room Category"
                       icon="fas fa-download"
                     />
+                    <NItem
+                      to="/hotel?tab=inventory"
+                      active={tab === 'inventory'}
+                      label="Inventory"
+                      icon="fas fa-inventory"
+                    />
                   </Nav>
                 </Card.Footer>
               </Card>
@@ -52,7 +59,9 @@ function Hotel(__props) {
             <Col xs="12" sm="12" md="8" lg="9" className="mt-3">
               <Card>
                 <Card.Body>
-                  {tab === 'customer' ? (
+                  {tab === 'inventory' ? (
+                    <Inventory />
+                  ) : tab === 'customer' ? (
                     <Customer />
                   ) : tab === 'room' ? (
                     <Room />

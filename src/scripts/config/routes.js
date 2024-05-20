@@ -5,7 +5,6 @@ import Migration from '../../pages/Migration'
 import Option from '../../pages/Option'
 import Refresh from '../../pages/Refresh'
 import Role from '../../pages/Role'
-import Setting from '../../pages/Setting'
 import Transaction from '../../pages/Transaction'
 import User from '../../pages/User'
 
@@ -23,10 +22,6 @@ const routes = {
     {
       path: '/option',
       component: Option,
-    },
-    {
-      path: '/setting',
-      component: Setting,
     },
     {
       path: '/refresh',

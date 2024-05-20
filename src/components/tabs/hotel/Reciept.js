@@ -74,9 +74,9 @@ function Reciept() {
     bonus: { name: 'Bonus (NGN)', type: Number },
     checkedOut: { name: 'Checked Out', type: Boolean },
     status: { name: 'Status', type: String },
-    'createdAt.date': { name: 'Created', type: Date },
     'checkInDate.date': { name: 'Check in', type: Date },
     'checkOutDate.date': { name: 'Check in', type: Date },
+    'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
     action: {
       name: () => (

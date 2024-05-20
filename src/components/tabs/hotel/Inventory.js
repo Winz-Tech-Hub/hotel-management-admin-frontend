@@ -1,30 +1,47 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable eqeqeq */
 import React, { useRef, useState } from 'react'
-import { ALL_SETTING_CATEGORY, SETTING_CATEGORY } from '../../../scripts/config/RestEndpoints'
-import PaginatedTable from '../../paginating/PaginatedTable'
-import ModalBox from '../../general/Modal'
+import { ALL_INVENTORY, INVENTORY } from '../../../scripts/config/RestEndpoints'
+import PaginatedTable, { DESCENDING } from '../../paginating/PaginatedTable'
 import { FaTrash } from 'react-icons/fa'
+import ModalBox from '../../general/Modal'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
-import CategoryForm from './category_tab_components/CategoryForm'
+import InventoryForm from './inventory/InventoryForm'
 
-function CategoryTab(props) {
+function Inventory() {
   const [reload, setReload] = useState(false)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [itemId, setItemId] = useState('')
   const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
   const [updatingData, setUpdatingData] = useState(null)
 
-  const urlRef = useRef(ALL_SETTING_CATEGORY)
+  const urlRef = useRef(ALL_INVENTORY)
 
   const fieldsRef = useRef({
     _id: { name: 'ID', type: String },
-    name: { name: 'Name', type: String },
+    item: { name: 'Item', type: String },
+    type: { name: 'Type', type: String },
+    state: { name: 'State', type: String },
+    quantity: { name: 'Quantity', type: String },
+    unitPrice: { name: 'Unit Price', type: String },
+    totalPrice: { name: 'Total Price', type: String },
+    status: { name: 'Status', type: String },
     'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
     action: {
-      name: createOptionButton,
+      name: () => (
+        <Button
+          onClick={() => {
+            setShowCreateForm(true)
+          }}
+          style={{ padding: '5px' }}
+          title="Create new inventory"
+          variant="warning"
+        >
+          <i className="fas fa-user"></i> Create
+        </Button>
+      ),
       type: String,
       virtual: true,
       transform: { out },
@@ -33,9 +50,9 @@ function CategoryTab(props) {
 
   const queryRef = useRef({})
 
-  async function deleteCategory(categoryId) {
+  async function deleteInventory(inventoryId) {
     const fetchData = {
-      url: SETTING_CATEGORY + categoryId,
+      url: INVENTORY + inventoryId,
       method: 'DELETE',
     }
     let data = null
@@ -45,15 +62,15 @@ function CategoryTab(props) {
       toast.error(er.message)
     }
     if (!data?.data?.status) {
-      toast.error(data.data.message)
+      toast.error(data?.data?.message || 'Error')
     } else {
       setShowConfirmDeletion(false)
       setReload(!reload)
-      toast.success(data.data.message)
+      toast.success(data?.data?.message || 'Success')
     }
   }
 
-  function out(rowData, rowIndex) {
+  function out(rowData) {
     return (
       <ButtonGroup size="sm">
         <Button
@@ -62,7 +79,7 @@ function CategoryTab(props) {
             setItemId(rowData._id)
           }}
           style={{ padding: '5px' }}
-          title="Delete this category"
+          title="Delete this inventory"
           variant="danger"
         >
           <FaTrash />
@@ -73,7 +90,7 @@ function CategoryTab(props) {
             setUpdatingData(rowData)
           }}
           style={{ padding: '5px' }}
-          title="Edit this category"
+          title="Edit this inventory"
           variant="warning"
         >
           <i className="fas fa-edit"></i>
@@ -81,28 +98,17 @@ function CategoryTab(props) {
       </ButtonGroup>
     )
   }
-
-  function createOptionButton() {
-    return (
-      <>
-        <Button onClick={() => setShowCreateForm(true)} style={{ padding: '5px', fontSize: '11px' }}>
-          Add
-        </Button>
-      </>
-    )
-  }
-
   return (
     <>
       <ModalBox
         show={showConfirmDeletion}
         onCancel={() => setShowConfirmDeletion(false)}
-        onAccept={() => deleteCategory(itemId)}
+        onAccept={() => deleteInventory(itemId)}
         header={<h2 className="text-center">Confirm Deletion</h2>}
         type="danger"
         backdrop
       >
-        <span>Are Sure you want to delete this category</span>
+        <span>Are Sure you want to delete this inventory</span>
       </ModalBox>
 
       <ModalBox
@@ -112,18 +118,19 @@ function CategoryTab(props) {
           setUpdatingData(null)
         }}
         control={false}
-        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Category</h2>}
+        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Inventory</h2>}
         backdrop
       >
-        <CategoryForm setReload={(e) => setReload(!reload)} data={updatingData} />
+        {!updatingData ? <InventoryForm /> : <InventoryForm setReload={() => setReload(!reload)} data={updatingData} />}
       </ModalBox>
 
       <PaginatedTable
         url={urlRef.current}
-        dataName="settingCategories"
+        dataName="inventories"
         fields={fieldsRef.current}
         query={queryRef.current}
-        primaryKey="name"
+        primaryKey="createdAt.date"
+        sortOrder={DESCENDING}
         forCurrentUser={false}
         reload={reload}
       />
@@ -131,4 +138,4 @@ function CategoryTab(props) {
   )
 }
 
-export default CategoryTab
+export default Inventory

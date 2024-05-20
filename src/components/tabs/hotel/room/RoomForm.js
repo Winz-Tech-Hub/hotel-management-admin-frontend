@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { ALL_ROOMCATEGORY, CREATE_ROOM } from '../../../../scripts/config/RestEndpoints'
+import { ALL_ROOM, CREATE_ROOM } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../paginating/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
 import { paginatingUrl } from '../../../../scripts/misc'
@@ -22,7 +22,7 @@ function RoomForm(props) {
 
   useEffect(() => {
     ;(async () => {
-      const url = paginatingUrl(ALL_ROOMCATEGORY, {
+      const url = paginatingUrl(ALL_ROOM, {
         status: ACTIVE,
       })
       let data
