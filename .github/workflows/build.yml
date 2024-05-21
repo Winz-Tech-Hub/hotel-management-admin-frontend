@@ -33,14 +33,14 @@ jobs:
 
       - name: Push to production
         run: |
-          BETTING_PLATFORM_DEPLOYMENT_KEY="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"
+          HOTEL_PLATFORM_DEPLOYMENT_KEY="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"
           cd ../
-          git clone https://$BETTING_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/betting-platform-admin-frontend-react-production.git
-          cd betting-platform-admin-frontend-react-production
+          git clone https://$HOTEL_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/hotel-management-admin-frontend-react-production.git
+          cd hotel-management-admin-frontend-react-production
           sudo cp -r ./.git  ../
           sudo rm -rf *
           sudo cp -r ../.git ./
-          cp -a ../betting-platform-admin-frontend-react/build/. ./
+          cp -a ../hotel-management-admin-frontend-react/build/. ./
           git add .
           git commit -m "Deploy build output - $(date)"
           git push

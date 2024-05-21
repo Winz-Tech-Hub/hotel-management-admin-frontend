@@ -149,7 +149,7 @@ function Action(props) {
           <Button
             size="lg"
             variant="danger"
-            onClick={(e) => run(e, 'sudo systemctl restart betting-platformMainServer')}
+            onClick={(e) => run(e, 'sudo systemctl restart hotel-managementMainServer')}
           >
             <Spinner loading={restarting}>Restart Main Server Service</Spinner>
           </Button>

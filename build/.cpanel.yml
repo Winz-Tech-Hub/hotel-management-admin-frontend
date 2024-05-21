@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/globlhmj/admin.betting-platformai.com   # Set the deployment path
+    - export DEPLOYPATH=/home/globlhmj/admin.hotel-managementai.com   # Set the deployment path
 
     - /bin/cp -R * $DEPLOYPATH

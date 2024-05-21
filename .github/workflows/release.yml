@@ -15,10 +15,10 @@ jobs:
 
     - name: Creating tag
       run: |
-        BETTING_PLATFORM_DEPLOYMENT_KEY="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"
+        HOTEL_PLATFORM_DEPLOYMENT_KEY="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"
         cd ../
-        git clone https://$BETTING_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/betting-platform-admin-frontend-react.git
-        cd betting-platform-admin-frontend-react
+        git clone https://$HOTEL_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/hotel-management-admin-frontend-react.git
+        cd hotel-management-admin-frontend-react
 
         CURRENT_VERSION=$(jq -r '.version' package.json)
         

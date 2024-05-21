@@ -14,8 +14,8 @@ function Git(_props) {
   const location = useLocation()
   const tab = new URLSearchParams(location.search)?.get('tab')
   const [output, setOutput] = useState('')
-  const [url, setUrl] = useState('https://api.betting-platformai.com:3002')
-  const [repo, setRepo] = useState('betting-platform-backend-production')
+  const [url, setUrl] = useState('https://api.hotel-managementai.com:3002')
+  const [repo, setRepo] = useState('hotel-management-backend-production')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
