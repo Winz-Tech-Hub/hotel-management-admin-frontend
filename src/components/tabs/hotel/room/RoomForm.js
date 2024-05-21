@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { ALL_ROOM, CREATE_ROOM } from '../../../../scripts/config/RestEndpoints'
+import { ALL_ROOMCATEGORY, CREATE_ROOM } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../paginating/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
 import { paginatingUrl } from '../../../../scripts/misc'
@@ -22,7 +22,7 @@ function RoomForm(props) {
 
   useEffect(() => {
     ;(async () => {
-      const url = paginatingUrl(ALL_ROOM, {
+      const url = paginatingUrl(ALL_ROOMCATEGORY, {
         status: ACTIVE,
       })
       let data
@@ -36,7 +36,7 @@ function RoomForm(props) {
         if (!data.data.status) {
           toast.error(data.data.message)
         } else {
-          const d = data.data.categories.results
+          const d = data.data.roomCategories.results
           d && setCategories(d)
         }
       }
@@ -77,7 +77,7 @@ function RoomForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }
@@ -109,7 +109,7 @@ function RoomForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }
@@ -122,10 +122,10 @@ function RoomForm(props) {
       <Row>
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Role</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Category</InputGroup.Text>
             <Form.Select required={true} value={category} onChange={(e) => setCategory(e.target.value)}>
               <option key="first" value="">
-                Select Role
+                Select Room Category
               </option>
 
               {categories?.map((cat) => (

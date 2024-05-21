@@ -4,8 +4,6 @@ import Hotel from '../../pages/Hotel'
 import Migration from '../../pages/Migration'
 import Option from '../../pages/Option'
 import Refresh from '../../pages/Refresh'
-import Role from '../../pages/Role'
-import Transaction from '../../pages/Transaction'
 import User from '../../pages/User'
 
 const routes = {
@@ -36,16 +34,8 @@ const routes = {
       component: Migration,
     },
     {
-      path: '/role',
-      component: Role,
-    },
-    {
       path: '/hotel',
       component: Hotel,
-    },
-    {
-      path: '/transaction',
-      component: Transaction,
     },
   ],
 }

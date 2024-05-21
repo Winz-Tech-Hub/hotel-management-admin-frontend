@@ -188,10 +188,6 @@ export const ROOMCATEGORY = '/room-category/'
 export const CREATE_ROOMCATEGORY = '/room-category'
 export const ALL_ROOMCATEGORY = '/room-category/all'
 
-export const ROLE = '/role/'
-export const CREATE_ROLE = '/role'
-export const ALL_ROLE = '/role/all'
-
 export const INVENTORY = '/inventory/'
 export const CREATE_INVENTORY = '/inventory'
 export const ALL_INVENTORY = '/inventory/all'

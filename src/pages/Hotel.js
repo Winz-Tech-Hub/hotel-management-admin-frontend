@@ -31,26 +31,21 @@ function Hotel(__props) {
                       to="../hotel?tab=reciept"
                       active={!tab || tab === 'reciept'}
                       label="Reciept"
-                      icon="fas fa-book"
+                      icon="fas fa-receipt"
                     />
-                    <NItem
-                      to="/hotel?tab=customer"
-                      active={tab === 'customer'}
-                      label="Customer"
-                      icon="fas fa-download"
-                    />
-                    <NItem to="/hotel?tab=room" active={tab === 'room'} label="Room" icon="fas fa-download" />
+                    <NItem to="/hotel?tab=customer" active={tab === 'customer'} label="Customer" icon="fas fa-user" />
+                    <NItem to="/hotel?tab=room" active={tab === 'room'} label="Room" icon="fas fa-door-open" />
                     <NItem
                       to="/hotel?tab=roomcategory"
                       active={tab === 'roomcategory'}
                       label="Room Category"
-                      icon="fas fa-download"
+                      icon="fas fa-layer-group"
                     />
                     <NItem
                       to="/hotel?tab=inventory"
                       active={tab === 'inventory'}
                       label="Inventory"
-                      icon="fas fa-inventory"
+                      icon="fas fa-archive"
                     />
                   </Nav>
                 </Card.Footer>

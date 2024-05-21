@@ -99,7 +99,7 @@ function UserProfileForm(props) {
       if (!data?.data?.status) {
         toast.error(data?.data?.message || 'Error')
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         setSubmitting(false)
         toast.success(data.data.message)

@@ -5,8 +5,7 @@ import { toast } from 'react-toastify'
 import { CREATE_USER, ALL_ROLE } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../general/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
-import { ACTIVE, ADMIN, USER } from '../../../../scripts/config/contants'
-import { paginatingUrl } from '../../../../scripts/misc'
+import { ADMIN, USER } from '../../../../scripts/config/contants'
 
 function UserForm(props) {
   const dataIdRef = useRef('')
@@ -18,33 +17,8 @@ function UserForm(props) {
   const [lastname, setLastname] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [role, setRole] = useState(1)
+  const [role, setRole] = useState(USER)
   const [status, setStatus] = useState(0)
-
-  const [roles, setRoles] = useState([])
-
-  useEffect(() => {
-    ;(async () => {
-      const url = paginatingUrl(ALL_ROLE, {
-        status: ACTIVE,
-      })
-      let data
-      try {
-        data = await fetcher.fetch(url)
-      } catch (er) {
-        toast.error(er.message)
-        return
-      }
-      if (data) {
-        if (!data.data.status) {
-          toast.error(data.data.message)
-        } else {
-          const d = data.data.roles.results
-          d && setRoles(d)
-        }
-      }
-    })()
-  }, [])
 
   useEffect(() => {
     const data = props.data
@@ -85,7 +59,7 @@ function UserForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }
@@ -120,7 +94,7 @@ function UserForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }
@@ -182,16 +156,20 @@ function UserForm(props) {
         <Col xs="12" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Role</InputGroup.Text>
-            <Form.Select required={true} value={role} onChange={(e) => setRole(e.target.value)}>
+            <Form.Select
+              required={true}
+              value={role}
+              onChange={(e) => setRole(e.target.value === ADMIN ? ADMIN : USER)}
+            >
               <option key="first" value="">
                 Select Role
               </option>
-
-              {roles?.map((role) => (
-                <option key={role._id} value={role.position}>
-                  {role.name}
-                </option>
-              ))}
+              <option key="user" value={USER}>
+                User
+              </option>
+              <option key="admin" value={ADMIN}>
+                Admin
+              </option>
             </Form.Select>
           </InputGroup>
         </Col>

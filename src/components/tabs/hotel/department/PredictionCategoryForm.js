@@ -54,7 +54,7 @@ function PredictionCategoryForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }
@@ -88,7 +88,7 @@ function PredictionCategoryForm(props) {
       if (!data.data.status) {
         toast.error(data.data.message)
       } else {
-        props.setData && props.setData(data.data.generated)
+        props.setData && props.setData(data.data.created)
         props.setReload && props.setReload()
         toast.success(data.data.message)
       }

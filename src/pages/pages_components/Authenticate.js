@@ -47,7 +47,7 @@ function Authenticate({ children }) {
     const authTimeDiff = authTimeD && Date.now() - authTimeD
     const day30 = 1000 * 60 * 60 * 24 * 30
     const isActive = uid && auth && auth.trim().length !== 0 && authTimeDiff && authTimeDiff < day30
-    return true //isActive
+    return isActive
   }
 
   return <>{active ? children : <Login setActive={setActive} authenticate={authenticate} />}</>
