@@ -70,7 +70,7 @@ module.exports = {
     headers: {
       'Content-Type': '',
     },
-    port: 3000,
+    port: 3004,
     open: true,
     historyApiFallback: true,
   },

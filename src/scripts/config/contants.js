@@ -52,3 +52,10 @@ export const DEPOSIT = 'deposit'
 export const WITHDRAW = 'withdraw'
 export const TRANSFER = 'transfer'
 export const CHARGE = 'charge'
+
+//Hotel Management
+//Positions
+export const RECEPTIONIST = 1
+export const BARTENDER = 2
+export const KITCHEN = 3
+export const STORE_KEEPER = 4

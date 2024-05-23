@@ -17,10 +17,12 @@ function RecieptForm(props) {
   const [roomCategory, setRoomCategory] = useState('')
   const [room, setRoom] = useState('')
   const [amount, setAmount] = useState('')
-  const [bonus, setBonus] = useState('')
+  const [discount, setDiscount] = useState('')
   const [checkedOut, setCheckedOut] = useState('')
   const [checkInDate, setCheckInDate] = useState('')
   const [checkOutDate, setCheckOutDate] = useState('')
+  const [duration, setDuration] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('')
 
   const [status, setStatus] = useState('')
 
@@ -34,10 +36,12 @@ function RecieptForm(props) {
       setRoomCategory(data.roomCategory?._id)
       setRoom(data.room?._id)
       setAmount(data.amount)
-      setBonus(data.bonus)
+      setDiscount(data.discount)
       setCheckedOut(data.checkedOut)
       setCheckInDate(data.checkInDate.date)
       setCheckOutDate(data.checkOutDate.date)
+      setDuration(data.duration)
+      setPaymentMethod(data.paymentMethod)
       setStatus(data.status)
 
       setIsUpdate(true)
@@ -55,7 +59,7 @@ function RecieptForm(props) {
         roomCategory,
         room,
         amount,
-        bonus,
+        discount,
         checkedOut: !!checkedOut,
         'checkInDate.date': checkInDate,
         'checkOutDate.date': checkOutDate,
@@ -94,7 +98,7 @@ function RecieptForm(props) {
         roomCategory,
         room,
         amount,
-        bonus,
+        discount,
         checkedOut: !!checkedOut,
         'checkInDate.date': checkInDate,
         'checkOutDate.date': checkOutDate,
@@ -184,12 +188,12 @@ function RecieptForm(props) {
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Bonus</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Discount</InputGroup.Text>
             <Form.Control
               required={true}
               type="number"
-              value={bonus}
-              onChange={(e) => setBonus(e.target.value)}
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
@@ -220,12 +224,24 @@ function RecieptForm(props) {
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Check Out Date</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Duration</InputGroup.Text>
+            <Form.Control
+              required={true}
+              type="number"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            ></Form.Control>
+          </InputGroup>
+        </Col>
+
+        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Payment Method</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
-              value={checkOutDate}
-              onChange={(e) => setCheckOutDate(e.target.value)}
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
@@ -240,7 +256,7 @@ function RecieptForm(props) {
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating package' : 'Creating package'}`}>
+          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating reciept' : 'Creating reciept'}`}>
             <Form.Control
               size="md"
               type="submit"

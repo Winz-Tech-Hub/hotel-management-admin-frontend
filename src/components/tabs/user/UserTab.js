@@ -8,6 +8,15 @@ import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
 import UserForm from './user_tab_components/UserForm'
 import { FaTrash } from 'react-icons/fa'
+import {
+  ADMIN,
+  BARTENDER,
+  DEVELOPER,
+  KITCHEN,
+  RECEPTIONIST,
+  STORE_KEEPER,
+  USER,
+} from '../../../scripts/config/contants'
 
 function UserTab() {
   const [reload, setReload] = useState(false)
@@ -30,8 +39,44 @@ function UserTab() {
         out: (rowData) => {
           return (
             <>
-              <div className="text-bold">{rowData?.role?.name}</div>
-              <div className="text-mute">{rowData?.role?._id}</div>
+              <div className="text-bold">
+                {(() => {
+                  switch (rowData?.role) {
+                    case ADMIN:
+                      return 'Admin'
+                    case USER:
+                      return 'Normal User'
+                    case DEVELOPER:
+                      return 'Developer'
+                  }
+                })()}
+              </div>
+            </>
+          )
+        },
+      },
+    },
+    position: {
+      name: 'Position',
+      type: String,
+      transform: {
+        out: (rowData) => {
+          return (
+            <>
+              <div className="text-bold">
+                {(() => {
+                  switch (rowData?.position) {
+                    case RECEPTIONIST:
+                      return 'Receptionist'
+                    case BARTENDER:
+                      return 'Bartender'
+                    case KITCHEN:
+                      return 'Kitchen'
+                    case STORE_KEEPER:
+                      return 'Store Keeper'
+                  }
+                })()}
+              </div>
             </>
           )
         },

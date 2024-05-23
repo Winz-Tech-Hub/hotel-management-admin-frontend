@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { CREATE_USER, ALL_ROLE } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../general/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
-import { ADMIN, USER } from '../../../../scripts/config/contants'
+import { ADMIN, BARTENDER, KITCHEN, RECEPTIONIST, STORE_KEEPER, USER } from '../../../../scripts/config/contants'
 
 function UserForm(props) {
   const dataIdRef = useRef('')
@@ -18,6 +18,7 @@ function UserForm(props) {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [role, setRole] = useState(USER)
+  const [position, setPosition] = useState('')
   const [status, setStatus] = useState(0)
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function UserForm(props) {
       setRole(data.role)
       setPhone(data.phone)
       setStatus(data.status)
+      setPosition(data.position)
       setIsUpdate(true)
     }
   }, [])
@@ -45,6 +47,7 @@ function UserForm(props) {
         lastname,
         email,
         role,
+        position,
         phone,
         status,
       },
@@ -80,6 +83,7 @@ function UserForm(props) {
         lastname,
         email,
         role,
+        position,
         phone,
         status,
       },
@@ -155,20 +159,39 @@ function UserForm(props) {
 
         <Col xs="12" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Role</InputGroup.Text>
-            <Form.Select
-              required={true}
-              value={role}
-              onChange={(e) => setRole(e.target.value === ADMIN ? ADMIN : USER)}
-            >
+            <InputGroup.Text className="fw-bold">Privilege</InputGroup.Text>
+            <Form.Select value={role} onChange={(e) => setRole(e.target.value === ADMIN ? ADMIN : USER)}>
               <option key="first" value="">
-                Select Role
+                Select privilege
               </option>
               <option key="user" value={USER}>
-                User
+                Normal
               </option>
               <option key="admin" value={ADMIN}>
                 Admin
+              </option>
+            </Form.Select>
+          </InputGroup>
+        </Col>
+
+        <Col xs="12" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Position</InputGroup.Text>
+            <Form.Select required={true} value={position} onChange={(e) => setPosition(parseInt(e.target.value))}>
+              <option key="first" value="">
+                Select position
+              </option>
+              <option key="user" value={RECEPTIONIST}>
+                Receptionist
+              </option>
+              <option key="admin" value={BARTENDER}>
+                Bartender
+              </option>
+              <option key="user" value={KITCHEN}>
+                Kitchen
+              </option>
+              <option key="admin" value={STORE_KEEPER}>
+                Store Keeper
               </option>
             </Form.Select>
           </InputGroup>
