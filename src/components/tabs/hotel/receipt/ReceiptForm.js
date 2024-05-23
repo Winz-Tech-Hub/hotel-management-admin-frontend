@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { CREATE_PACKAGE } from '../../../../scripts/config/RestEndpoints'
+import { CREATE_RECEIPT } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../paginating/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
 
-function RecieptForm(props) {
+function ReceiptForm(props) {
   const dataIdRef = useRef('')
 
   const [isUpdate, setIsUpdate] = useState(false)
@@ -48,11 +48,11 @@ function RecieptForm(props) {
     }
   }, [props.data])
 
-  async function createReciept(e) {
+  async function createReceipt(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_PACKAGE,
+      url: CREATE_RECEIPT,
       data: {
         customer,
         staff,
@@ -84,11 +84,11 @@ function RecieptForm(props) {
     setSubmitting(false)
   }
 
-  async function updateReciept(e) {
+  async function updateReceipt(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_PACKAGE,
+      url: CREATE_RECEIPT,
       method: 'PATCH',
       data: {
         id: dataIdRef.current,
@@ -124,7 +124,7 @@ function RecieptForm(props) {
   }
 
   return (
-    <Form onSubmit={(e) => (isUpdate ? updateReciept(e) : createReciept(e))}>
+    <Form onSubmit={(e) => (isUpdate ? updateReceipt(e) : createReceipt(e))}>
       <Row>
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
@@ -256,7 +256,7 @@ function RecieptForm(props) {
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating reciept' : 'Creating reciept'}`}>
+          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating receipt' : 'Creating receipt'}`}>
             <Form.Control
               size="md"
               type="submit"
@@ -269,4 +269,4 @@ function RecieptForm(props) {
     </Form>
   )
 }
-export default RecieptForm
+export default ReceiptForm

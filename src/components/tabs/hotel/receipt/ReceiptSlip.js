@@ -19,7 +19,7 @@ import MDTypography from '../../../MDTypography'
 import { Card, Divider } from '@mui/material'
 import MDButton from '../../../MDButton'
 
-function RecieptSlip({ recieptData }) {
+function ReceiptSlip({ receiptData }) {
   const labels = []
   const values = []
 
@@ -27,7 +27,7 @@ function RecieptSlip({ recieptData }) {
   const description = 'Hotel management software'
 
   // Convert this form `objectKey` of the object key in to this `object key`
-  Object.keys(recieptData).forEach((el) => {
+  Object.keys(receiptData).forEach((el) => {
     if (el.match(/[A-Z\s]+/)) {
       const uppercaseLetter = Array.from(el).find((i) => i.match(/[A-Z]+/))
       const newElement = el.replace(uppercaseLetter, ` ${uppercaseLetter.toLowerCase()}`)
@@ -39,7 +39,7 @@ function RecieptSlip({ recieptData }) {
   })
 
   // Push the object values into the values array
-  Object.values(recieptData).forEach((el) => values.push(el))
+  Object.values(receiptData).forEach((el) => values.push(el))
 
   // Render the card info items
   const renderItems = labels.map((label, key) => (
@@ -80,4 +80,4 @@ function RecieptSlip({ recieptData }) {
   )
 }
 
-export default RecieptSlip
+export default ReceiptSlip

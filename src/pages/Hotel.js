@@ -3,11 +3,12 @@ import Main from '../layout/Main'
 import { Card, Col, Container, Nav, Row } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import NItem from './pages_components/NItem'
-import Reciept from '../components/tabs/hotel/Reciept'
+import Receipt from '../components/tabs/hotel/Receipt'
 import Customer from '../components/tabs/hotel/Customer'
 import Room from '../components/tabs/hotel/Room'
 import RoomCategory from '../components/tabs/hotel/RoomCategory'
 import Inventory from '../components/tabs/hotel/Inventory'
+import ReferralCommission from '../components/tabs/hotel/ReferralCommission'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Hotel(__props) {
@@ -28,9 +29,9 @@ function Hotel(__props) {
                 <Card.Footer className="mt-0 pt-0 mx-1 px-1">
                   <Nav variant="pills" className="s-grid">
                     <NItem
-                      to="../hotel?tab=reciept"
-                      active={!tab || tab === 'reciept'}
-                      label="Reciept"
+                      to="../hotel?tab=receipt"
+                      active={!tab || tab === 'receipt'}
+                      label="Receipt"
                       icon="fas fa-receipt"
                     />
                     <NItem to="/hotel?tab=customer" active={tab === 'customer'} label="Customer" icon="fas fa-user" />
@@ -45,6 +46,12 @@ function Hotel(__props) {
                       to="/hotel?tab=inventory"
                       active={tab === 'inventory'}
                       label="Inventory"
+                      icon="fas fa-archive"
+                    />
+                    <NItem
+                      to="/hotel?tab=referral-commission"
+                      active={tab === 'referral-commission'}
+                      label="Referral Commission"
                       icon="fas fa-archive"
                     />
                   </Nav>
@@ -62,8 +69,10 @@ function Hotel(__props) {
                     <Room />
                   ) : tab === 'roomcategory' ? (
                     <RoomCategory />
+                  ) : tab === 'referral-commission' ? (
+                    <ReferralCommission />
                   ) : (
-                    <Reciept />
+                    <Receipt />
                   )}
                 </Card.Body>
               </Card>

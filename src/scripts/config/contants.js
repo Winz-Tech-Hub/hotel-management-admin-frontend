@@ -48,14 +48,15 @@ export const ACCEPTANCE_FEE = 2.0
 export const GAIN_FETCHING_FREQUENCY = 20000 //Millis
 export const DATA_FETCH_LIMIT = 10
 
-export const DEPOSIT = 'deposit'
-export const WITHDRAW = 'withdraw'
-export const TRANSFER = 'transfer'
-export const CHARGE = 'charge'
-
 //Hotel Management
 //Positions
 export const RECEPTIONIST = 1
 export const BARTENDER = 2
 export const KITCHEN = 3
 export const STORE_KEEPER = 4
+
+//Payment method
+export const POS = 'pos'
+export const TRANSFER = 'transfer'
+export const CASH = 'cash'
+export const COMMISSION = 'commission'

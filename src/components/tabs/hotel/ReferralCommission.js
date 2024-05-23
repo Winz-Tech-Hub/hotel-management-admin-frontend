@@ -1,24 +1,21 @@
 import React, { useRef, useState } from 'react'
-import { ALL_RECIEPT, RECIEPT } from '../../../scripts/config/RestEndpoints'
+import { ALL_REFERRAL_COMMISSION, REFERRAL_COMMISSION } from '../../../scripts/config/RestEndpoints'
 import PaginatedTable, { DESCENDING } from '../../paginating/PaginatedTable'
 import { FaTrash } from 'react-icons/fa'
 import ModalBox from '../../general/Modal'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
-import RecieptForm from './reciept/RecieptForm'
-import RecieptSlip from './reciept/RecieptSlip'
+import ReferralCommissionForm from './referralcommission/ReferralCommissionForm'
 
-function Reciept() {
+function ReferralCommission() {
   const [reload, setReload] = useState(false)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [itemId, setItemId] = useState('')
   const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
   const [updatingData, setUpdatingData] = useState(null)
-  const [activeReciept, setActiveReciept] = useState([])
-  const [showReciept, setShowReciept] = useState(false)
 
-  const urlRef = useRef(ALL_RECIEPT)
+  const urlRef = useRef(ALL_REFERRAL_COMMISSION)
 
   const fieldsRef = useRef({
     _id: { name: 'ID', type: String },
@@ -46,38 +43,13 @@ function Reciept() {
         ),
       },
     },
-    roomCategory: {
-      name: 'Room Cat.',
+    receipt: {
+      name: 'Receipt.',
       type: String,
-      transform: {
-        out: (row) => (
-          <>
-            <div className="text-italic">{row?.roomCategory?._id}</div>
-            <div className="fw-bold">{row?.roomCategory?.name}</div>
-          </>
-        ),
-      },
-    },
-    room: {
-      name: 'Room',
-      type: String,
-      transform: {
-        out: (row) => (
-          <>
-            <div className="text-italic">{row?.room?._id}</div>
-            <div className="fw-bold">{row?.room?.name}</div>
-          </>
-        ),
-      },
     },
     amount: { name: 'Amount (NGN)', type: Number },
-    discount: { name: 'Bonus (NGN)', type: Number },
-    duration: { name: 'Duration', type: Number },
-    paymentMethod: { name: 'Payment Method', type: Number },
-    checkedOut: { name: 'Checked Out', type: Boolean },
+    type: { name: 'Type', type: String },
     status: { name: 'Status', type: String },
-    'checkInDate.date': { name: 'Check in', type: Date },
-    'checkOutDate.date': { name: 'Check in', type: Date },
     'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
     action: {
@@ -87,7 +59,7 @@ function Reciept() {
             setShowCreateForm(true)
           }}
           style={{ padding: '5px' }}
-          title="Create Reciept"
+          title="Create Referral Commission"
           variant="warning"
         >
           <i className="fas fa-user"></i> Create
@@ -100,12 +72,12 @@ function Reciept() {
   })
 
   const queryRef = useRef({
-    populate: ['customer', 'staff', 'roomCategory', 'room'],
+    populate: ['customer', 'staff'],
   })
 
-  async function deleteReciept(recieptId) {
+  async function deleteReferralCommission(referralCommissionId) {
     const fetchData = {
-      url: RECIEPT + recieptId,
+      url: REFERRAL_COMMISSION + referralCommissionId,
       method: 'DELETE',
     }
     let data = null
@@ -132,7 +104,7 @@ function Reciept() {
             setItemId(rowData._id)
           }}
           style={{ padding: '5px' }}
-          title="Delete this reciept"
+          title="Delete this referral commission"
           variant="danger"
         >
           <FaTrash />
@@ -143,7 +115,7 @@ function Reciept() {
             setUpdatingData(rowData)
           }}
           style={{ padding: '5px' }}
-          title="Edit this reciept"
+          title="Edit this referral commission"
           variant="warning"
         >
           <i className="fas fa-edit"></i>
@@ -154,25 +126,14 @@ function Reciept() {
   return (
     <>
       <ModalBox
-        show={showReciept}
-        onCancel={() => setShowReciept(false)}
-        onAccept={() => setShowReciept(false)}
-        header={<h2 className="text-center">Reciept</h2>}
-        type="success"
-        backdrop
-      >
-        <RecieptSlip recieptData={activeReciept} />
-      </ModalBox>
-
-      <ModalBox
         show={showConfirmDeletion}
         onCancel={() => setShowConfirmDeletion(false)}
-        onAccept={() => deleteReciept(itemId)}
+        onAccept={() => deleteReferralCommission(itemId)}
         header={<h2 className="text-center">Confirm Deletion</h2>}
         type="danger"
         backdrop
       >
-        <span>Are Sure you want to delete this reciept</span>
+        <span>Are Sure you want to delete this referral commission</span>
       </ModalBox>
 
       <ModalBox
@@ -182,33 +143,28 @@ function Reciept() {
           setUpdatingData(null)
         }}
         control={false}
-        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Reciept</h2>}
+        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Referral Commission</h2>}
         backdrop
       >
-        {!updatingData ? <RecieptForm /> : <RecieptForm setReload={() => setReload(!reload)} data={updatingData} />}
+        {!updatingData ? (
+          <ReferralCommissionForm />
+        ) : (
+          <ReferralCommissionForm setReload={() => setReload(!reload)} data={updatingData} />
+        )}
       </ModalBox>
 
       <PaginatedTable
         url={urlRef.current}
-        dataName="reciepts"
+        dataName="referralCommissions"
         fields={fieldsRef.current}
         query={queryRef.current}
         primaryKey="createdAt.date"
         sortOrder={DESCENDING}
         forCurrentUser={false}
         reload={reload}
-        rowOptions={(rowData) => ({
-          onClick: () => {
-            setActiveReciept(rowData)
-            setShowReciept(true)
-          },
-          style: {
-            cursor: 'pointer',
-          },
-        })}
       />
     </>
   )
 }
 
-export default Reciept
+export default ReferralCommission
