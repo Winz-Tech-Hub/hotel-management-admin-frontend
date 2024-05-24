@@ -5,7 +5,15 @@ import { toast } from 'react-toastify'
 import { CREATE_USER, ALL_ROLE } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../general/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
-import { ADMIN, BARTENDER, KITCHEN, RECEPTIONIST, STORE_KEEPER, USER } from '../../../../scripts/config/contants'
+import {
+  ADMIN,
+  BARTENDER,
+  DEVELOPER,
+  KITCHEN,
+  RECEPTIONIST,
+  STORE_KEEPER,
+  USER,
+} from '../../../../scripts/config/contants'
 
 function UserForm(props) {
   const dataIdRef = useRef('')
@@ -19,6 +27,7 @@ function UserForm(props) {
   const [phone, setPhone] = useState('')
   const [role, setRole] = useState(USER)
   const [position, setPosition] = useState('')
+  const [password, setPassword] = useState('')
   const [status, setStatus] = useState(0)
 
   useEffect(() => {
@@ -32,6 +41,7 @@ function UserForm(props) {
       setPhone(data.phone)
       setStatus(data.status)
       setPosition(data.position)
+      setPassword(data.password)
       setIsUpdate(true)
     }
   }, [])
@@ -48,6 +58,7 @@ function UserForm(props) {
         email,
         role,
         position,
+        password,
         phone,
         status,
       },
@@ -84,6 +95,7 @@ function UserForm(props) {
         email,
         role,
         position,
+        password,
         phone,
         status,
       },
@@ -117,7 +129,7 @@ function UserForm(props) {
               type="text"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value?.trim())}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -129,7 +141,7 @@ function UserForm(props) {
               type="text"
               value={lastname}
               onChange={(e) => setLastname(e.target.value?.trim())}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -141,19 +153,21 @@ function UserForm(props) {
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value?.trim()?.toLowerCase())}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
         <Col xs="12" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Phone </InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            ></Form.Control>
+            <Form.Control required={true} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          </InputGroup>
+        </Col>
+
+        <Col xs="12" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Password </InputGroup.Text>
+            <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} />
           </InputGroup>
         </Col>
 
@@ -165,10 +179,13 @@ function UserForm(props) {
                 Select privilege
               </option>
               <option key="user" value={USER}>
-                Normal
+                Normal/Staff
               </option>
               <option key="admin" value={ADMIN}>
-                Admin
+                Manager/Admin
+              </option>
+              <option key="admin" value={DEVELOPER}>
+                Developer
               </option>
             </Form.Select>
           </InputGroup>
@@ -181,18 +198,16 @@ function UserForm(props) {
               <option key="first" value="">
                 Select position
               </option>
-              <option key="user" value={RECEPTIONIST}>
-                Receptionist
-              </option>
-              <option key="admin" value={BARTENDER}>
-                Bartender
-              </option>
-              <option key="user" value={KITCHEN}>
-                Kitchen
-              </option>
-              <option key="admin" value={STORE_KEEPER}>
-                Store Keeper
-              </option>
+              {[
+                { name: 'RECEPTIONIST', value: RECEPTIONIST },
+                { name: 'BARTENDER', value: BARTENDER },
+                { name: 'KITCHEN', value: KITCHEN },
+                { name: 'STORE_KEEPER', value: STORE_KEEPER },
+              ].map((pos) => (
+                <option key={pos.name} value={pos.value}>
+                  {pos.name}
+                </option>
+              ))}
             </Form.Select>
           </InputGroup>
         </Col>
@@ -213,7 +228,7 @@ function UserForm(props) {
               type="submit"
               value={`${isUpdate ? 'Update' : 'Create'}`}
               className="fw-bold utilityLink"
-            ></Form.Control>
+            />
           </Spinner>
         </Col>
       </Row>
