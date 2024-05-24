@@ -16,6 +16,7 @@ function ReceiptForm(props) {
   const [staff, setStaff] = useState('')
   const [roomCategory, setRoomCategory] = useState('')
   const [room, setRoom] = useState('')
+  const [roomName, setRoomName] = useState('')
   const [amount, setAmount] = useState('')
   const [discount, setDiscount] = useState('')
   const [checkedOut, setCheckedOut] = useState('')
@@ -35,6 +36,7 @@ function ReceiptForm(props) {
       setStaff(data.staff?._id)
       setRoomCategory(data.roomCategory?._id)
       setRoom(data.room?._id)
+      setRoomName(data.roomName)
       setAmount(data.amount)
       setDiscount(data.discount)
       setCheckedOut(data.checkedOut)
@@ -97,6 +99,7 @@ function ReceiptForm(props) {
         staff,
         roomCategory,
         room,
+        roomName,
         amount,
         discount,
         checkedOut: !!checkedOut,
@@ -129,24 +132,14 @@ function ReceiptForm(props) {
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Customer</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="text"
-              value={customer}
-              onChange={(e) => setCustomer(e.target.value)}
-            ></Form.Control>
+            <Form.Control required={true} type="text" value={customer} onChange={(e) => setCustomer(e.target.value)} />
           </InputGroup>
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Staff</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="text"
-              value={staff}
-              onChange={(e) => setStaff(e.target.value)}
-            ></Form.Control>
+            <Form.Control required={true} type="text" value={staff} onChange={(e) => setStaff(e.target.value)} />
           </InputGroup>
         </Col>
 
@@ -158,31 +151,28 @@ function ReceiptForm(props) {
               type="text"
               value={roomCategory}
               onChange={(e) => setRoomCategory(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Room</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="text"
-              value={room}
-              onChange={(e) => setRoom(e.target.value)}
-            ></Form.Control>
+            <InputGroup.Text className="fw-bold">Room Id</InputGroup.Text>
+            <Form.Control required={true} type="text" value={room} onChange={(e) => setRoom(e.target.value)} />
+          </InputGroup>
+        </Col>
+
+        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Room Name</InputGroup.Text>
+            <Form.Control type="text" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
           </InputGroup>
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Amount</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            ></Form.Control>
+            <Form.Control required={true} type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
           </InputGroup>
         </Col>
 
@@ -194,7 +184,7 @@ function ReceiptForm(props) {
               type="number"
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -206,7 +196,7 @@ function ReceiptForm(props) {
               type="text"
               value={checkedOut}
               onChange={(e) => setCheckedOut(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -218,7 +208,7 @@ function ReceiptForm(props) {
               type="text"
               value={checkInDate}
               onChange={(e) => setCheckInDate(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -230,7 +220,7 @@ function ReceiptForm(props) {
               type="number"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -242,7 +232,7 @@ function ReceiptForm(props) {
               type="text"
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Control>
+            />
           </InputGroup>
         </Col>
 
@@ -262,7 +252,7 @@ function ReceiptForm(props) {
               type="submit"
               value={`${isUpdate ? 'Update' : 'Create'}`}
               className="fw-bold utilityLink"
-            ></Form.Control>
+            />
           </Spinner>
         </Col>
       </Row>

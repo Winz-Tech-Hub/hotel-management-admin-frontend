@@ -70,6 +70,7 @@ function Receipt() {
         ),
       },
     },
+    roomName: { name: 'Room Name', type: String },
     amount: { name: 'Amount (NGN)', type: Number },
     discount: { name: 'Bonus (NGN)', type: Number },
     duration: { name: 'Duration', type: Number },
