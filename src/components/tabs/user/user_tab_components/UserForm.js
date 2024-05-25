@@ -41,7 +41,7 @@ function UserForm(props) {
       setPhone(data.phone)
       setStatus(data.status)
       setPosition(data.position)
-      setPassword(data.password)
+      //setPassword(data.password)
       setIsUpdate(true)
     }
   }, [])
