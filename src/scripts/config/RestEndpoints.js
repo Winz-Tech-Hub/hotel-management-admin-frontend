@@ -195,3 +195,7 @@ export const ALL_INVENTORY = '/inventory/all'
 export const REFERRAL_COMMISSION = '/referral-commission/'
 export const CREATE_REFERRAL_COMMISSION = '/referral-commission'
 export const ALL_REFERRAL_COMMISSION = '/referral-commission/all'
+
+export const LOG = '/log/'
+export const CREATE_LOG = '/log'
+export const ALL_LOG = '/log/all'

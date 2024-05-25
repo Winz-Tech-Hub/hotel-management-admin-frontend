@@ -1,6 +1,7 @@
 import Dashboard from '../../pages/Dashboard'
 import Git from '../../pages/Git'
 import Hotel from '../../pages/Hotel'
+import Log from '../../pages/Log'
 import Migration from '../../pages/Migration'
 import Option from '../../pages/Option'
 import Refresh from '../../pages/Refresh'
@@ -20,6 +21,10 @@ const routes = {
     {
       path: '/option',
       component: Option,
+    },
+    {
+      path: '/log',
+      component: Log,
     },
     {
       path: '/refresh',

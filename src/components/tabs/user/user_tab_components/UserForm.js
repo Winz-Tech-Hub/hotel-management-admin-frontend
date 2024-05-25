@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { CREATE_USER, ALL_ROLE } from '../../../../scripts/config/RestEndpoints'
+import { CREATE_USER } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../general/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
 import {
