@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
 import React from 'react'
 
@@ -12,7 +11,7 @@ const TRow = React.forwardRef(function TRow(
       style={style?.trStyle}
       className={`${className?.trClass || ''}`}
       {...options}
-      onClick={options?.onClick ? () => options?.onClick(result) : () => {}}
+      onClick={options?.onClick && ((e) => options?.onClick(e, result))}
       ref={ref}
     >
       {numbered ? (

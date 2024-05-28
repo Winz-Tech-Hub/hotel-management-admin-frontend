@@ -116,3 +116,15 @@ export const paginatingUrl = (url, data, size = 10) => {
   const dataString = encodeQuery(data)
   return `${url}?q=${dataString}&size=${size}`
 }
+
+export function camelCaseToTitleCase(camelCaseString) {
+  // Insert a space before each uppercase letter and capitalize the first letter of the resulting string
+  const result = camelCaseString
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // Handle camelCase transitions
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2') // Handle sequences of uppercase letters followed by a lowercase letter
+    .replace(/^./, function (str) {
+      return str.toUpperCase()
+    }) // Capitalize the first character
+
+  return result
+}

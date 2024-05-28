@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable require-jsdoc */
 import React, { useState } from 'react'
@@ -46,7 +47,12 @@ function Login({ setActive = () => {}, authenticate = () => {} }) {
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner">
           <div className="text-center my-3">
-            <img src="../favicon.ico" height="100" width="100" alt={SharedConfig.getSessionData('SITE_TITLE')} />
+            <img
+              src={SharedConfig.getSessionData('SITE_FAVICON') || '/favicon.ico'}
+              height="100"
+              width="100"
+              alt={SharedConfig.getSessionData('SITE_TITLE')}
+            />
             <div className="text-center text-red fw-bold text-uppercase">Admin</div>
           </div>
           <Card>

@@ -50,6 +50,8 @@ export const OPTION = '/option/'
 export const CREATE_OPTION = '/option'
 export const ALL_OPTION = '/option/all'
 
+export const DATA_STORE_GET = '/data-store/get/'
+
 export const TOKEN = '/token/'
 export const CREATE_TOKEN = '/token'
 export const ALL_TOKEN = '/token/all'

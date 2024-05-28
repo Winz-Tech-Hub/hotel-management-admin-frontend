@@ -23,7 +23,7 @@ function Log() {
                 <Card.Footer className="mt-0 pt-0 mx-1 px-1">
                   <Nav variant="pills" className="s-grid">
                     <NavItem>
-                      <Link to="../log" className={`nav-link ${!tab || tab === 'log' ? 'active' : ''}`}>
+                      <Link to="../log" className={`nav-link ${!tab || tab === 'book' ? 'active' : ''}`}>
                         <i className="fas fa-gears me-1"></i> Logs
                       </Link>
                     </NavItem>

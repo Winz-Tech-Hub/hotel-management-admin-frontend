@@ -23,7 +23,7 @@ const dashboardRoutes = [
   {
     path: '/log',
     name: 'Log',
-    icon: 'fas fa-log',
+    icon: 'fas fa-book',
   },
   {
     path: '/git',

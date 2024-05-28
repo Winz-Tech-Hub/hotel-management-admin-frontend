@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useRef, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ClickCopy, { clipCopy } from '../general/ClickCopy'
@@ -18,8 +17,18 @@ function DoubleClickCopy(props) {
     <>
       <span
         ref={wrapperRef}
-        onClick={!props.noClickOpen ? () => setOpen(true) : undefined}
-        onDoubleClick={() => clipCopy(wrapperRef.current.innerText, setMsg)}
+        onClick={
+          !props.noClickOpen
+            ? (e) => {
+                setOpen(true)
+                e.stopPropagation()
+              }
+            : undefined
+        }
+        onDoubleClick={(e) => {
+          clipCopy(wrapperRef.current.innerText, setMsg)
+          e.stopPropagation()
+        }}
         className="c-pointer"
         title="Double click to copy the content"
       >

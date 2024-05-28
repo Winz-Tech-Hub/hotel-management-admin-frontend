@@ -2,18 +2,20 @@
 import React, { useRef, useState } from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { ALL_LOG, LOG } from '../../../scripts/config/RestEndpoints'
-import PaginatedTable from '../../paginating/PaginatedTable'
+import PaginatedTable, { DESCENDING } from '../../paginating/PaginatedTable'
 import ModalBox from '../../general/Modal'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
 import LogForm from './log_tab_components/LogForm'
 import { FaTrash } from 'react-icons/fa'
+import LogView from './log_tab_components/LogView'
 
 function LogTab(props) {
   const [reload, setReload] = useState(false)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [itemId, setItemId] = useState('')
   const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
+  const [viewRef, setViewRef] = useState(false)
   const [updatingData, setUpdatingData] = useState(null)
 
   const urlRef = useRef(ALL_LOG)
@@ -44,6 +46,7 @@ function LogTab(props) {
       transform: { out },
     },
   })
+  const queryRef = useRef({ populate: ['staff'] })
 
   async function deleteLog(logId) {
     const fetchData = {
@@ -69,9 +72,10 @@ function LogTab(props) {
     return (
       <ButtonGroup size="sm">
         <Button
-          onClick={() => {
+          onClick={(e) => {
             setShowConfirmDeletion(true)
             setItemId(rowData._id)
+            e.stopPropagation()
           }}
           style={{ padding: '5px' }}
           title="Delete this log"
@@ -80,9 +84,10 @@ function LogTab(props) {
           <FaTrash />
         </Button>
         <Button
-          onClick={() => {
+          onClick={(e) => {
             setShowCreateForm(true)
             setUpdatingData(rowData)
+            e.stopPropagation()
           }}
           style={{ padding: '5px' }}
           title="Edit this log"
@@ -130,12 +135,36 @@ function LogTab(props) {
         <LogForm setReload={(e) => setReload(!reload)} data={updatingData} />
       </ModalBox>
 
+      <ModalBox
+        show={viewRef}
+        onCancel={() => {
+          setViewRef(false)
+        }}
+        noControl
+        noHeader
+        backdrop
+      >
+        <LogView model={updatingData?.model} dataId={updatingData?.dataId} />
+      </ModalBox>
+
       <PaginatedTable
         url={urlRef.current}
         dataName="logs"
         fields={fieldRef.current}
-        primaryKey="name"
+        primaryKey="createdAt.date"
         /* setData={data => setData(data)} */ forCurrentUser={false}
+        query={queryRef.current}
+        rowOptions={(rowData) => ({
+          onClick: (e) => {
+            setUpdatingData(rowData)
+            setViewRef(true)
+            e.stopPropagation()
+          },
+          style: {
+            cursor: 'pointer',
+          },
+        })}
+        sortOrder={DESCENDING}
         reload={reload}
       />
     </>

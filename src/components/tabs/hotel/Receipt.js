@@ -7,7 +7,7 @@ import { Button, ButtonGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
 import ReceiptForm from './receipt/ReceiptForm'
-import ReceiptSlip from './receipt/ReceiptSlip'
+import DataDisplay from '../../paginating/DataDisplay'
 
 function Receipt() {
   const [reload, setReload] = useState(false)
@@ -46,39 +46,65 @@ function Receipt() {
         ),
       },
     },
-    roomCategory: {
-      name: 'Room Cat.',
+    rooms: {
+      name: 'Rooms',
       type: String,
       transform: {
-        out: (row) => (
-          <>
-            <div className="text-italic">{row?.roomCategory?._id}</div>
-            <div className="fw-bold">{row?.roomCategory?.name}</div>
-          </>
-        ),
+        out: (row) =>
+          row?.rooms.map((room) => (
+            <div style={{ border: `1px solid blue`, borderRadius: 5, padding: `2px 0` }}>
+              <div className="text-italic">{room?._id}</div>
+              <div className="fw-bold">{room?.name}</div>
+            </div>
+          )),
       },
     },
-    room: {
-      name: 'Room',
-      type: String,
-      transform: {
-        out: (row) => (
-          <>
-            <div className="text-italic">{row?.room?._id}</div>
-            <div className="fw-bold">{row?.room?.name}</div>
-          </>
-        ),
-      },
-    },
-    roomName: { name: 'Room Name', type: String },
+    extend: { name: 'Extends Receipt', type: String },
+    extended: { name: 'Extended', type: Boolean },
+    roomNames: { name: 'Room Names', type: String },
+    roomCategoryNames: { name: 'Room Category Names', type: String },
     amount: { name: 'Amount (NGN)', type: Number },
     discount: { name: 'Bonus (NGN)', type: Number },
     duration: { name: 'Duration', type: Number },
     paymentMethod: { name: 'Payment Method', type: Number },
     checkedOut: { name: 'Checked Out', type: Boolean },
     status: { name: 'Status', type: String },
-    'checkInDate.dateString': { name: 'Check in', type: Date },
-    'checkOutDate.dateString': { name: 'Check out', type: Date },
+    'checkInDate.date': {
+      name: 'Check in',
+      type: Date,
+      transform: {
+        out: (row) => (
+          <>
+            <div className="text-italic">{row?.checkInDate.dateString}</div>
+            <div className="text-italic">{row?.checkInDate.timeString}</div>
+          </>
+        ),
+      },
+    },
+    'checkOutDate.date': {
+      name: 'Check out',
+      type: Date,
+      transform: {
+        out: (row) => (
+          <>
+            <div className="text-italic">{row?.checkOutDate?.dateString}</div>
+            <div className="text-italic">{row?.checkOutDate?.timeString}</div>
+          </>
+        ),
+      },
+    },
+    'expectedCheckOutDate.date': {
+      name: 'Expected Check out',
+      type: Date,
+      transform: {
+        out: (row) => (
+          <>
+            <div className="text-italic">{row?.expectedCheckOutDate?.dateString}</div>
+            <div className="text-italic">{row?.expectedCheckOutDate?.timeString}</div>
+          </>
+        ),
+      },
+    },
     'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
     action: {
@@ -101,7 +127,7 @@ function Receipt() {
   })
 
   const queryRef = useRef({
-    populate: ['customer', 'staff', 'roomCategory', 'room'],
+    populate: ['customer', 'staff', 'rooms'],
   })
 
   async function deleteReceipt(receiptId) {
@@ -128,9 +154,10 @@ function Receipt() {
     return (
       <ButtonGroup size="sm">
         <Button
-          onClick={() => {
+          onClick={(e) => {
             setShowConfirmDeletion(true)
             setItemId(rowData._id)
+            e?.stopPropagation()
           }}
           style={{ padding: '5px' }}
           title="Delete this receipt"
@@ -139,9 +166,10 @@ function Receipt() {
           <FaTrash />
         </Button>
         <Button
-          onClick={() => {
+          onClick={(e) => {
             setShowCreateForm(true)
             setUpdatingData(rowData)
+            e?.stopPropagation()
           }}
           style={{ padding: '5px' }}
           title="Edit this receipt"
@@ -161,8 +189,9 @@ function Receipt() {
         header={<h2 className="text-center">Receipt</h2>}
         type="success"
         backdrop
+        //fullscreen
       >
-        <ReceiptSlip receiptData={activeReceipt} />
+        <DataDisplay data={activeReceipt} />
       </ModalBox>
 
       <ModalBox
@@ -199,9 +228,10 @@ function Receipt() {
         forCurrentUser={false}
         reload={reload}
         rowOptions={(rowData) => ({
-          onClick: () => {
+          onClick: (e) => {
             setActiveReceipt(rowData)
             setShowReceipt(true)
+            e.stopPropagation()
           },
           style: {
             cursor: 'pointer',
