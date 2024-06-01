@@ -43,7 +43,7 @@ function Login({ setActive = () => {}, authenticate = () => {} }) {
 
   return (
     <>
-      <ToastContainer newestOnTop={true} toastStyle={{ borderRadius: 20, paddding: 5 }} />
+      <ToastContainer newestOnTop={true} toastStyle={{ borderRadius: 20, padding: 5 }} />
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner">
           <div className="text-center my-3">

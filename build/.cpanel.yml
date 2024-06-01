@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/globlhmj/admin.hotel-managementai.com   # Set the deployment path
-
-    - /bin/cp -R * $DEPLOYPATH

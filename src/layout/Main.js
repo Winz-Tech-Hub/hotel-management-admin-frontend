@@ -79,7 +79,7 @@ function Main(props) {
             <Header />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y mb-5">
-                <ToastContainer newestOnTop={true} toastStyle={{ borderRadius: 20, paddding: 5 }} />
+                <ToastContainer newestOnTop={true} toastStyle={{ borderRadius: 20, padding: 5 }} />
                 {props.children}
               </div>
               <Footer>
