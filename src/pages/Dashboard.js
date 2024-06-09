@@ -9,35 +9,7 @@ function Dashboard() {
   return (
     <>
       <Main>
-        <Row className="s-grid">
-          <Col xs="12" sm="6" md="4" lg="3">
-            <InfoCard name="Users" datastore={'User'} />
-          </Col>
-
-          <Col xs="12" sm="6" md="4" lg="3">
-            <InfoCard
-              name="System Revenue"
-              datastore={'SystemRevenue'}
-              field={'amount'}
-              type="money"
-              query={{ $nin: [{ type: ['withdraw'] }] }}
-            />
-          </Col>
-
-          <Col xs="12" sm="6" md="4" lg="3">
-            <InfoCard
-              name="AutoTrade Revenue"
-              datastore={'AutoTradePlanTransaction'}
-              field={'amount'}
-              type="money"
-              query={{ status: ACTIVE }}
-            />
-          </Col>
-
-          <Col xs="12" sm="6" md="4" lg="3">
-            <ConnectedClients />
-          </Col>
-        </Row>
+        <Row className="s-grid"></Row>
       </Main>
     </>
   )

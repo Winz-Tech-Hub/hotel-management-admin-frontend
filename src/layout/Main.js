@@ -1,9 +1,6 @@
 /* eslint-disable no-new */
-/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react'
-/* import sidebarImage from "../assets/img/avatars/7.png";
- */ import Footer from '../layout/Footer'
-import Header from '../layout/Header'
+import Footer from '../layout/Footer'
 import Sidebar from '../layout/Sidebar'
 import NavToggler from './layout_components/NavToggler'
 import ThemeToggler from './layout_components/ThemeToggler'
@@ -76,7 +73,6 @@ function Main(props) {
         <div className="layout-container">
           <Sidebar />
           <div className="layout-page" ref={mainPanel}>
-            <Header />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y mb-5">
                 <ToastContainer newestOnTop={true} toastStyle={{ borderRadius: 20, padding: 5 }} />

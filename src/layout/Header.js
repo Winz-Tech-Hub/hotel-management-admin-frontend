@@ -86,7 +86,7 @@ function Header(props) {
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <Link className="dropdown-item" to="/setting">
+                      <Link className="dropdown-item" to="/">
                         <div className="d-flex">
                           <div className="flex-shrink-0 me-3">
                             <div className="avatar avatar-online">

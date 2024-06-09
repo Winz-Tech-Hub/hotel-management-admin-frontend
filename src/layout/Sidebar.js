@@ -40,9 +40,9 @@ function Sidebar() {
           className="layout-menu menu-vertical menu bg-menu-theme my-2"
           style={{ maxHeight: '-webkit-fill-available' }}
         >
-          <div className="app-brand demo" style={style}>
+          <div className="app-brand demo" style={{ textOverflow: 'ellipsis', textWrap: 'nowrap', ...style }}>
             <Link to="/" className="app-brand-link">
-              <span className="app-brand-logo demo">
+              <span className="app-brand-logo demo text-wrap overflow">
                 <h2>{SharedConfig.getSessionData('SITE_TITLE') || SITE_TITLE}</h2>
                 {/* <img src={avatar} alt="Logo" className="thumbnail" /> */}
               </span>
