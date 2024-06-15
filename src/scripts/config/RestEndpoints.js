@@ -201,3 +201,15 @@ export const ALL_REFERRAL_COMMISSION = '/referral-commission/all'
 export const LOG = '/log/'
 export const CREATE_LOG = '/log'
 export const ALL_LOG = '/log/all'
+
+export const ITEM = '/item/'
+export const CREATE_ITEM = '/item'
+export const ALL_ITEM = '/item/all'
+
+export const ITEMDISPENSE = '/item-dispense/'
+export const CREATE_ITEMDISPENSE = '/item-dispense'
+export const ALL_ITEMDISPENSE = '/item-dispense/all'
+
+export const ITEMCATEGORY = '/item-category/'
+export const CREATE_ITEMCATEGORY = '/item-category'
+export const ALL_ITEMCATEGORY = '/item-category/all'

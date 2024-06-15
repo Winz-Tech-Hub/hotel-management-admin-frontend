@@ -1,26 +1,49 @@
 /* eslint-disable eqeqeq */
 import React, { useRef, useState } from 'react'
-import { ALL_INVENTORY, CREATE_INVENTORY, INVENTORY } from '../../../scripts/config/RestEndpoints'
+import { ALL_ITEMDISPENSE, ITEMDISPENSE } from '../../../scripts/config/RestEndpoints'
 import PaginatedTable, { DESCENDING } from '../../paginating/PaginatedTable'
 import { FaTrash } from 'react-icons/fa'
 import ModalBox from '../../general/Modal'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
-import InventoryForm from './inventory/InventoryForm'
-import { ACTIVE, INACTIVE } from '../../../scripts/config/contants'
+import ItemDispenseForm from './itemDispense/ItemDispenseForm'
 
-function Inventory() {
+function ItemDispense() {
   const [reload, setReload] = useState(false)
   const [showCreateForm, setShowCreateForm] = useState(false)
-  const [itemId, setItemId] = useState('')
+  const [itemDispenseId, setItemDispenseId] = useState('')
   const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
   const [updatingData, setUpdatingData] = useState(null)
 
-  const urlRef = useRef(ALL_INVENTORY)
+  const urlRef = useRef(ALL_ITEMDISPENSE)
 
   const fieldsRef = useRef({
     _id: { name: 'ID', type: String },
+    fromStaff: {
+      name: 'From Staff',
+      type: String,
+      transform: {
+        out: (row) => (
+          <>
+            <div className="text-italic">{row?.fromStaff?._id}</div>
+            <div className="fw-bold">{row?.fromStaff?.firstname}</div>
+          </>
+        ),
+      },
+    },
+    toStaff: {
+      name: 'To Staff',
+      type: String,
+      transform: {
+        out: (row) => (
+          <>
+            <div className="text-italic">{row?.toStaff?._id}</div>
+            <div className="fw-bold">{row?.toStaff?.firstname}</div>
+          </>
+        ),
+      },
+    },
     item: {
       name: 'Item',
       type: String,
@@ -33,12 +56,9 @@ function Inventory() {
         ),
       },
     },
-    type: { name: 'Type', type: String },
+    quantity: { name: 'Quantity', type: Number },
+    amount: { name: 'Amount', type: Number },
     department: { name: 'Department', type: String },
-    state: { name: 'State', type: String },
-    quantity: { name: 'Quantity', type: String },
-    unitPrice: { name: 'Unit Price', type: String },
-    totalPrice: { name: 'Total Price', type: String },
     status: { name: 'Status', type: String },
     'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
@@ -49,7 +69,7 @@ function Inventory() {
             setShowCreateForm(true)
           }}
           style={{ padding: '5px' }}
-          title="Create new inventory"
+          title="Create new itemDispense"
           variant="warning"
         >
           <i className="fas fa-user"></i> Create
@@ -61,11 +81,11 @@ function Inventory() {
     },
   })
 
-  const queryRef = useRef({})
+  const queryRef = useRef({ populate: ['fromStaff', 'toStaff', 'item'] })
 
-  async function deleteInventory(inventoryId) {
+  async function deleteItemDispense(itemDispenseId) {
     const fetchData = {
-      url: INVENTORY + inventoryId,
+      url: ITEMDISPENSE + itemDispenseId,
       method: 'DELETE',
     }
     let data = null
@@ -89,10 +109,10 @@ function Inventory() {
         <Button
           onClick={() => {
             setShowConfirmDeletion(true)
-            setItemId(rowData._id)
+            setItemDispenseId(rowData._id)
           }}
           style={{ padding: '5px' }}
-          title="Delete this inventory"
+          title="Delete this itemDispense"
           variant="danger"
         >
           <FaTrash />
@@ -103,68 +123,25 @@ function Inventory() {
             setUpdatingData(rowData)
           }}
           style={{ padding: '5px' }}
-          title="Edit this inventory"
+          title="Edit this itemDispense"
           variant="warning"
         >
           <i className="fas fa-edit"></i>
         </Button>
-        <Button
-          onClick={() => {
-            action('cancel')
-          }}
-          style={{ padding: '5px' }}
-          title="Cancel"
-          variant="danger"
-        >
-          <i className="fas fa-times"></i>
-        </Button>
-        <Button
-          onClick={() => {
-            action('approve')
-          }}
-          style={{ padding: '5px' }}
-          title="Approve"
-          variant="success"
-        >
-          <i className="fas fa-mark"></i>
-        </Button>
       </ButtonGroup>
     )
   }
-
-  async function action(act) {
-    const fetchData = {
-      url: CREATE_INVENTORY,
-      method: 'POST',
-      data: {
-        status: act !== 'approve' ? INACTIVE : ACTIVE,
-      },
-    }
-    let data = null
-    try {
-      data = await fetcher.fetch(fetchData)
-    } catch (er) {
-      toast.error(er.message)
-    }
-    if (!data?.data?.status) {
-      toast.error(data?.data?.message || 'Error')
-    } else {
-      setReload(!reload)
-      toast.success(data?.data?.message || 'Success')
-    }
-  }
-
   return (
     <>
       <ModalBox
         show={showConfirmDeletion}
         onCancel={() => setShowConfirmDeletion(false)}
-        onAccept={() => deleteInventory(itemId)}
+        onAccept={() => deleteItemDispense(itemDispenseId)}
         header={<h2 className="text-center">Confirm Deletion</h2>}
         type="danger"
         backdrop
       >
-        <span>Are Sure you want to delete this inventory</span>
+        <span>Are Sure you want to delete this itemDispense</span>
       </ModalBox>
 
       <ModalBox
@@ -174,15 +151,19 @@ function Inventory() {
           setUpdatingData(null)
         }}
         control={false}
-        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Inventory</h2>}
+        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} ItemDispense</h2>}
         backdrop
       >
-        {!updatingData ? <InventoryForm /> : <InventoryForm setReload={() => setReload(!reload)} data={updatingData} />}
+        {!updatingData ? (
+          <ItemDispenseForm />
+        ) : (
+          <ItemDispenseForm setReload={() => setReload(!reload)} data={updatingData} />
+        )}
       </ModalBox>
 
       <PaginatedTable
         url={urlRef.current}
-        dataName="inventories"
+        dataName="itemDispenses"
         fields={fieldsRef.current}
         query={queryRef.current}
         primaryKey="createdAt.date"
@@ -194,4 +175,4 @@ function Inventory() {
   )
 }
 
-export default Inventory
+export default ItemDispense

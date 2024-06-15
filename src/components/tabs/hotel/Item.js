@@ -1,44 +1,42 @@
 /* eslint-disable eqeqeq */
 import React, { useRef, useState } from 'react'
-import { ALL_INVENTORY, CREATE_INVENTORY, INVENTORY } from '../../../scripts/config/RestEndpoints'
+import { ALL_ITEM, CREATE_ITEM, ITEM } from '../../../scripts/config/RestEndpoints'
 import PaginatedTable, { DESCENDING } from '../../paginating/PaginatedTable'
 import { FaTrash } from 'react-icons/fa'
 import ModalBox from '../../general/Modal'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import fetcher from '../../../scripts/SharedFetcher'
-import InventoryForm from './inventory/InventoryForm'
+import ItemForm from './item/ItemForm'
 import { ACTIVE, INACTIVE } from '../../../scripts/config/contants'
 
-function Inventory() {
+function Item() {
   const [reload, setReload] = useState(false)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [itemId, setItemId] = useState('')
   const [showConfirmDeletion, setShowConfirmDeletion] = useState(false)
   const [updatingData, setUpdatingData] = useState(null)
 
-  const urlRef = useRef(ALL_INVENTORY)
+  const urlRef = useRef(ALL_ITEM)
 
   const fieldsRef = useRef({
     _id: { name: 'ID', type: String },
-    item: {
-      name: 'Item',
+    category: {
+      name: 'Category',
       type: String,
       transform: {
         out: (row) => (
           <>
-            <div className="text-italic">{row?.item?._id}</div>
-            <div className="fw-bold">{row?.item?.name}</div>
+            <div className="text-italic">{row?.category?._id}</div>
+            <div className="fw-bold">{row?.category?.name}</div>
           </>
         ),
       },
     },
-    type: { name: 'Type', type: String },
+    name: { name: 'Name', type: String },
+    quantity: { name: 'Quantity', type: Number },
+    price: { name: 'Price', type: Number },
     department: { name: 'Department', type: String },
-    state: { name: 'State', type: String },
-    quantity: { name: 'Quantity', type: String },
-    unitPrice: { name: 'Unit Price', type: String },
-    totalPrice: { name: 'Total Price', type: String },
     status: { name: 'Status', type: String },
     'createdAt.date': { name: 'Created', type: Date },
     'updatedAt.date': { name: 'Updated', type: Date, hideFromSearch: true },
@@ -49,7 +47,7 @@ function Inventory() {
             setShowCreateForm(true)
           }}
           style={{ padding: '5px' }}
-          title="Create new inventory"
+          title="Create new item"
           variant="warning"
         >
           <i className="fas fa-user"></i> Create
@@ -61,11 +59,11 @@ function Inventory() {
     },
   })
 
-  const queryRef = useRef({})
+  const queryRef = useRef({ populate: ['category'] })
 
-  async function deleteInventory(inventoryId) {
+  async function deleteItem(itemId) {
     const fetchData = {
-      url: INVENTORY + inventoryId,
+      url: ITEM + itemId,
       method: 'DELETE',
     }
     let data = null
@@ -83,6 +81,28 @@ function Inventory() {
     }
   }
 
+  async function action(act) {
+    const fetchData = {
+      url: CREATE_ITEM,
+      method: 'POST',
+      data: {
+        status: act !== 'approve' ? INACTIVE : ACTIVE,
+      },
+    }
+    let data = null
+    try {
+      data = await fetcher.fetch(fetchData)
+    } catch (er) {
+      toast.error(er.message)
+    }
+    if (!data?.data?.status) {
+      toast.error(data?.data?.message || 'Error')
+    } else {
+      setReload(!reload)
+      toast.success(data?.data?.message || 'Success')
+    }
+  }
+
   function out(rowData) {
     return (
       <ButtonGroup size="sm">
@@ -92,7 +112,7 @@ function Inventory() {
             setItemId(rowData._id)
           }}
           style={{ padding: '5px' }}
-          title="Delete this inventory"
+          title="Delete this item"
           variant="danger"
         >
           <FaTrash />
@@ -103,11 +123,12 @@ function Inventory() {
             setUpdatingData(rowData)
           }}
           style={{ padding: '5px' }}
-          title="Edit this inventory"
+          title="Edit this item"
           variant="warning"
         >
           <i className="fas fa-edit"></i>
         </Button>
+
         <Button
           onClick={() => {
             action('cancel')
@@ -131,40 +152,17 @@ function Inventory() {
       </ButtonGroup>
     )
   }
-
-  async function action(act) {
-    const fetchData = {
-      url: CREATE_INVENTORY,
-      method: 'POST',
-      data: {
-        status: act !== 'approve' ? INACTIVE : ACTIVE,
-      },
-    }
-    let data = null
-    try {
-      data = await fetcher.fetch(fetchData)
-    } catch (er) {
-      toast.error(er.message)
-    }
-    if (!data?.data?.status) {
-      toast.error(data?.data?.message || 'Error')
-    } else {
-      setReload(!reload)
-      toast.success(data?.data?.message || 'Success')
-    }
-  }
-
   return (
     <>
       <ModalBox
         show={showConfirmDeletion}
         onCancel={() => setShowConfirmDeletion(false)}
-        onAccept={() => deleteInventory(itemId)}
+        onAccept={() => deleteItem(itemId)}
         header={<h2 className="text-center">Confirm Deletion</h2>}
         type="danger"
         backdrop
       >
-        <span>Are Sure you want to delete this inventory</span>
+        <span>Are Sure you want to delete this item</span>
       </ModalBox>
 
       <ModalBox
@@ -174,15 +172,15 @@ function Inventory() {
           setUpdatingData(null)
         }}
         control={false}
-        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Inventory</h2>}
+        header={<h2 className="text-center">{`${updatingData ? 'Update' : 'Create'}`} Item</h2>}
         backdrop
       >
-        {!updatingData ? <InventoryForm /> : <InventoryForm setReload={() => setReload(!reload)} data={updatingData} />}
+        {!updatingData ? <ItemForm /> : <ItemForm setReload={() => setReload(!reload)} data={updatingData} />}
       </ModalBox>
 
       <PaginatedTable
         url={urlRef.current}
-        dataName="inventories"
+        dataName="items"
         fields={fieldsRef.current}
         query={queryRef.current}
         primaryKey="createdAt.date"
@@ -194,4 +192,4 @@ function Inventory() {
   )
 }
 
-export default Inventory
+export default Item

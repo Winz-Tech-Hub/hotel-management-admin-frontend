@@ -1,58 +1,74 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { ALL_INVENTORY, CREATE_INVENTORY } from '../../../../scripts/config/RestEndpoints'
+import { ALL_ITEMCATEGORY, CREATE_ITEM } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../paginating/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
 import { paginatingUrl } from '../../../../scripts/misc'
 import { ACTIVE } from '../../../../scripts/config/contants'
 
-function InventoryForm(props) {
+function ItemForm(props) {
   const dataIdRef = useRef('')
 
   const [isUpdate, setIsUpdate] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
 
-  const [item, setItem] = useState('')
-  const [type, setType] = useState('')
-  const [state, setState] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [unitPrice, setUnitPrice] = useState('')
-  const [totalPrice, setTotalPrice] = useState('')
-  const [department, setdepartment] = useState('')
+  const [category, setCategory] = useState('')
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [department, setDepartment] = useState('')
   const [status, setStatus] = useState('')
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    ;(async () => {
+      const url = paginatingUrl(ALL_ITEMCATEGORY, {
+        status: ACTIVE,
+      })
+      let data
+      try {
+        data = await fetcher.fetch(url)
+      } catch (er) {
+        toast.error(er.message)
+        return
+      }
+      if (data) {
+        if (!data.data.status) {
+          toast.error(data.data.message)
+        } else {
+          const d = data.data.itemCategories.results
+          d && setCategories(d)
+        }
+      }
+    })()
+  }, [])
 
   useEffect(() => {
     const data = props.data
     if (data) {
       dataIdRef.current = data._id
 
-      setItem(data.item)
-      setType(data.type)
-      setState(data.state)
-      setQuantity(data.quantity)
-      setUnitPrice(data.unitPrice)
-      setTotalPrice(data.totalPrice)
-      setdepartment(data.department)
+      setCategory(data.category)
+      setName(data.name)
+      setPrice(data.price)
+      setDepartment(data.department)
       setStatus(data.status)
 
       setIsUpdate(true)
     }
   }, [props.data])
 
-  async function createInventory(e) {
+  async function createItem(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_INVENTORY,
+      url: CREATE_ITEM,
       data: {
-        item,
-        type,
-        state,
-        quantity,
-        unitPrice,
-        totalPrice,
+        category: category,
+        name: name,
+        price,
         department,
         status,
       },
@@ -75,21 +91,18 @@ function InventoryForm(props) {
     setSubmitting(false)
   }
 
-  async function updateInventory(e) {
+  async function updateItem(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_INVENTORY,
+      url: CREATE_ITEM,
       method: 'PATCH',
       data: {
         id: dataIdRef.current,
 
-        item,
-        type,
-        state,
-        quantity,
-        unitPrice,
-        totalPrice,
+        category: category,
+        name: name,
+        price,
         department,
         status,
       },
@@ -113,89 +126,57 @@ function InventoryForm(props) {
   }
 
   return (
-    <Form onSubmit={(e) => (isUpdate ? updateInventory(e) : createInventory(e))}>
+    <Form onSubmit={(e) => (isUpdate ? updateItem(e) : createItem(e))}>
       <Row>
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Item</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Category</InputGroup.Text>
+            <Form.Select required={true} value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option key="first" value="">
+                Select Item Category
+              </option>
+
+              {categories?.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </Form.Select>
+          </InputGroup>
+        </Col>
+
+        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Name</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Type</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Name</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">State</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Name</InputGroup.Text>
             <Form.Control
-              required={true}
-              type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Quantity</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Unit Price</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="number"
-              value={unitPrice}
-              onChange={(e) => setUnitPrice(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Total Price</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="number"
-              value={totalPrice}
-              onChange={(e) => setTotalPrice(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Department</InputGroup.Text>
-            <Form.Control
-              placeholder="Bar or Store"
               required={true}
               type="text"
               value={department}
-              onChange={(e) => setdepartment(e.target.value)}
+              onChange={(e) => setDepartment(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
@@ -210,7 +191,7 @@ function InventoryForm(props) {
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating inventory' : 'Creating inventory'}`}>
+          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating item' : 'Creating item'}`}>
             <Form.Control
               size="md"
               type="submit"
@@ -223,4 +204,4 @@ function InventoryForm(props) {
     </Form>
   )
 }
-export default InventoryForm
+export default ItemForm

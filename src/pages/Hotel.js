@@ -9,6 +9,9 @@ import Room from '../components/tabs/hotel/Room'
 import RoomCategory from '../components/tabs/hotel/RoomCategory'
 import Inventory from '../components/tabs/hotel/Inventory'
 import ReferralCommission from '../components/tabs/hotel/ReferralCommission'
+import Item from '../components/tabs/hotel/Item'
+import ItemCategory from '../components/tabs/hotel/ItemCategory'
+import ItemDispense from '../components/tabs/hotel/ItemDispense'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Hotel(__props) {
@@ -48,6 +51,19 @@ function Hotel(__props) {
                       label="Inventory"
                       icon="fas fa-archive"
                     />
+                    <NItem to="/hotel?tab=item" active={tab === 'item'} label="Item" icon="fas fa-door-open" />
+                    <NItem
+                      to="/hotel?tab=itemcategory"
+                      active={tab === 'itemcategory'}
+                      label="Item Category"
+                      icon="fas fa-layer-group"
+                    />
+                    <NItem
+                      to="/hotel?tab=itemdispense"
+                      active={tab === 'itemdispense'}
+                      label="Item Dispense"
+                      icon="fas fa-archive"
+                    />
                     <NItem
                       to="/hotel?tab=referral-commission"
                       active={tab === 'referral-commission'}
@@ -69,6 +85,12 @@ function Hotel(__props) {
                     <Room />
                   ) : tab === 'roomcategory' ? (
                     <RoomCategory />
+                  ) : tab === 'item' ? (
+                    <Item />
+                  ) : tab === 'itemcategory' ? (
+                    <ItemCategory />
+                  ) : tab === 'itemdispense' ? (
+                    <ItemDispense />
                   ) : tab === 'referral-commission' ? (
                     <ReferralCommission />
                   ) : (

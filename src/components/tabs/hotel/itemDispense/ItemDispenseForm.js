@@ -1,26 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { ALL_INVENTORY, CREATE_INVENTORY } from '../../../../scripts/config/RestEndpoints'
+import { CREATE_ITEMDISPENSE } from '../../../../scripts/config/RestEndpoints'
 import Spinner from '../../../paginating/Spinner'
 import fetcher from '../../../../scripts/SharedFetcher'
-import { paginatingUrl } from '../../../../scripts/misc'
-import { ACTIVE } from '../../../../scripts/config/contants'
 
-function InventoryForm(props) {
+function ItemDispenseForm(props) {
   const dataIdRef = useRef('')
 
   const [isUpdate, setIsUpdate] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
 
-  const [item, setItem] = useState('')
-  const [type, setType] = useState('')
-  const [state, setState] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [unitPrice, setUnitPrice] = useState('')
-  const [totalPrice, setTotalPrice] = useState('')
+  const [fromStaff, setfromStaff] = useState('')
+  const [toStaff, settoStaff] = useState('')
+  const [item, setitem] = useState('')
+  const [quantity, setquantity] = useState('')
+  const [amount, setamount] = useState('')
   const [department, setdepartment] = useState('')
+
   const [status, setStatus] = useState('')
 
   useEffect(() => {
@@ -28,32 +26,32 @@ function InventoryForm(props) {
     if (data) {
       dataIdRef.current = data._id
 
-      setItem(data.item)
-      setType(data.type)
-      setState(data.state)
-      setQuantity(data.quantity)
-      setUnitPrice(data.unitPrice)
-      setTotalPrice(data.totalPrice)
+      setfromStaff(data.fromStaff)
+      settoStaff(data.toStaff)
+      setitem(data.item)
+      setquantity(data.quantity)
+      setamount(data.amount)
       setdepartment(data.department)
+
       setStatus(data.status)
 
       setIsUpdate(true)
     }
   }, [props.data])
 
-  async function createInventory(e) {
+  async function createItemDispense(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_INVENTORY,
+      url: CREATE_ITEMDISPENSE,
       data: {
+        fromStaff,
+        toStaff,
         item,
-        type,
-        state,
         quantity,
-        unitPrice,
-        totalPrice,
+        amount,
         department,
+
         status,
       },
     }
@@ -75,22 +73,22 @@ function InventoryForm(props) {
     setSubmitting(false)
   }
 
-  async function updateInventory(e) {
+  async function updateItemDispense(e) {
     setSubmitting(true)
     e.preventDefault()
     const gdFetchOption = {
-      url: CREATE_INVENTORY,
+      url: CREATE_ITEMDISPENSE,
       method: 'PATCH',
       data: {
         id: dataIdRef.current,
 
+        fromStaff,
+        toStaff,
         item,
-        type,
-        state,
         quantity,
-        unitPrice,
-        totalPrice,
+        amount,
         department,
+
         status,
       },
     }
@@ -113,85 +111,67 @@ function InventoryForm(props) {
   }
 
   return (
-    <Form onSubmit={(e) => (isUpdate ? updateInventory(e) : createInventory(e))}>
+    <Form onSubmit={(e) => (isUpdate ? updateItemDispense(e) : createItemDispense(e))}>
       <Row>
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Item</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">From staff Id</InputGroup.Text>
+            <Form.Control
+              required={true}
+              type="text"
+              value={fromStaff}
+              onChange={(e) => setfromStaff(e.target.value)}
+            ></Form.Control>
+          </InputGroup>
+        </Col>
+        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">To Staff Id</InputGroup.Text>
+            <Form.Control
+              required={true}
+              type="text"
+              value={toStaff}
+              onChange={(e) => settoStaff(e.target.value)}
+            ></Form.Control>
+          </InputGroup>
+        </Col>
+        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
+          <InputGroup>
+            <InputGroup.Text className="fw-bold">Item Id</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
               value={item}
-              onChange={(e) => setItem(e.target.value)}
+              onChange={(e) => setitem(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Type</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="text"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">State</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Quantity</InputGroup.Text>
             <Form.Control
               required={true}
-              type="number"
+              type="text"
               value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => setquantity(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
-
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Unit Price</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Amount</InputGroup.Text>
             <Form.Control
               required={true}
-              type="number"
-              value={unitPrice}
-              onChange={(e) => setUnitPrice(e.target.value)}
+              type="text"
+              value={amount}
+              onChange={(e) => setamount(e.target.value)}
             ></Form.Control>
           </InputGroup>
         </Col>
-
-        <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <InputGroup>
-            <InputGroup.Text className="fw-bold">Total Price</InputGroup.Text>
-            <Form.Control
-              required={true}
-              type="number"
-              value={totalPrice}
-              onChange={(e) => setTotalPrice(e.target.value)}
-            ></Form.Control>
-          </InputGroup>
-        </Col>
-
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
             <InputGroup.Text className="fw-bold">Department</InputGroup.Text>
             <Form.Control
-              placeholder="Bar or Store"
               required={true}
               type="text"
               value={department}
@@ -210,7 +190,7 @@ function InventoryForm(props) {
         </Col>
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
-          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating inventory' : 'Creating inventory'}`}>
+          <Spinner loading={submitting} loadingText={`${isUpdate ? 'Updating itemDispense' : 'Creating itemDispense'}`}>
             <Form.Control
               size="md"
               type="submit"
@@ -223,4 +203,4 @@ function InventoryForm(props) {
     </Form>
   )
 }
-export default InventoryForm
+export default ItemDispenseForm
