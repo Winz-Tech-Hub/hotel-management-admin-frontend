@@ -21,7 +21,7 @@ function ReferralCommission() {
     _id: { name: 'ID', type: String },
     customer: {
       name: 'Customer',
-      type: String,
+      type: String /* 
       transform: {
         out: (row) => (
           <>
@@ -29,7 +29,7 @@ function ReferralCommission() {
             <div className="fw-bold">{row?.customer?.name}</div>
           </>
         ),
-      },
+      }, */,
     },
     staff: {
       name: 'Staff',
@@ -38,7 +38,7 @@ function ReferralCommission() {
         out: (row) => (
           <>
             <div className="text-italic">{row?.staff?._id}</div>
-            <div className="fw-bold">{row?.staff?.firstname + ' ' + row?.uid?.lastname}</div>
+            <div className="fw-bold">{row?.staff?.firstname + ' ' + row?.staff?.lastname}</div>
           </>
         ),
       },
@@ -72,7 +72,7 @@ function ReferralCommission() {
   })
 
   const queryRef = useRef({
-    populate: ['customer', 'staff'],
+    populate: [/* 'customer', */ 'staff'],
   })
 
   async function deleteReferralCommission(referralCommissionId) {

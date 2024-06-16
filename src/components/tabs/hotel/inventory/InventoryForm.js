@@ -28,7 +28,7 @@ function InventoryForm(props) {
     if (data) {
       dataIdRef.current = data._id
 
-      setItem(data.item)
+      setItem(data.item._id)
       setType(data.type)
       setState(data.state)
       setQuantity(data.quantity)

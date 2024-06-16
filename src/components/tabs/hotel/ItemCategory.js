@@ -73,7 +73,7 @@ function ItemCategory() {
 
         <Button
           onClick={() => {
-            action('cancel')
+            action('cancel', rowData._id)
           }}
           style={{ padding: '5px' }}
           title="Cancel"
@@ -83,7 +83,7 @@ function ItemCategory() {
         </Button>
         <Button
           onClick={() => {
-            action('approve')
+            action('approve', rowData._id)
           }}
           style={{ padding: '5px' }}
           title="Approve"
@@ -116,11 +116,12 @@ function ItemCategory() {
       toast.success(data?.data?.message || 'Success')
     }
   }
-  async function action(act) {
+  async function action(act, id) {
     const fetchData = {
       url: CREATE_ITEMCATEGORY,
-      method: 'POST',
+      method: 'PATCH',
       data: {
+        id,
         status: act !== 'approve' ? INACTIVE : ACTIVE,
       },
     }

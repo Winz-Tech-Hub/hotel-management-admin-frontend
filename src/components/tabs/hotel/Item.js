@@ -81,11 +81,12 @@ function Item() {
     }
   }
 
-  async function action(act) {
+  async function action(act, id) {
     const fetchData = {
       url: CREATE_ITEM,
-      method: 'POST',
+      method: 'PATCH',
       data: {
+        id,
         status: act !== 'approve' ? INACTIVE : ACTIVE,
       },
     }
@@ -131,7 +132,7 @@ function Item() {
 
         <Button
           onClick={() => {
-            action('cancel')
+            action('cancel', rowData._id)
           }}
           style={{ padding: '5px' }}
           title="Cancel"
@@ -141,7 +142,7 @@ function Item() {
         </Button>
         <Button
           onClick={() => {
-            action('approve')
+            action('approve', rowData._id)
           }}
           style={{ padding: '5px' }}
           title="Approve"

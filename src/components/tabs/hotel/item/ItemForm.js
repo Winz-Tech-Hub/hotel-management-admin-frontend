@@ -50,7 +50,7 @@ function ItemForm(props) {
     if (data) {
       dataIdRef.current = data._id
 
-      setCategory(data.category)
+      setCategory(data.category?._id)
       setName(data.name)
       setPrice(data.price)
       setDepartment(data.department)

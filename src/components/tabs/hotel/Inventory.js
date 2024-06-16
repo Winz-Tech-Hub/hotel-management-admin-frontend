@@ -61,7 +61,7 @@ function Inventory() {
     },
   })
 
-  const queryRef = useRef({})
+  const queryRef = useRef({ populate: ['item'] })
 
   async function deleteInventory(inventoryId) {
     const fetchData = {
@@ -110,7 +110,7 @@ function Inventory() {
         </Button>
         <Button
           onClick={() => {
-            action('cancel')
+            action('cancel', rowData._id, rowData.item)
           }}
           style={{ padding: '5px' }}
           title="Cancel"
@@ -120,7 +120,7 @@ function Inventory() {
         </Button>
         <Button
           onClick={() => {
-            action('approve')
+            action('approve', rowData._id, rowData.item)
           }}
           style={{ padding: '5px' }}
           title="Approve"
@@ -132,11 +132,13 @@ function Inventory() {
     )
   }
 
-  async function action(act) {
+  async function action(act, id, item) {
     const fetchData = {
       url: CREATE_INVENTORY,
-      method: 'POST',
+      method: 'PATCH',
       data: {
+        id,
+        item,
         status: act !== 'approve' ? INACTIVE : ACTIVE,
       },
     }

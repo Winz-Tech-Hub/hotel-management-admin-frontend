@@ -26,9 +26,9 @@ function ItemDispenseForm(props) {
     if (data) {
       dataIdRef.current = data._id
 
-      setfromStaff(data.fromStaff)
-      settoStaff(data.toStaff)
-      setitem(data.item)
+      setfromStaff(data?.fromStaff?._id)
+      settoStaff(data?.toStaff?._id)
+      setitem(data?.item?._id)
       setquantity(data.quantity)
       setamount(data.amount)
       setdepartment(data.department)
