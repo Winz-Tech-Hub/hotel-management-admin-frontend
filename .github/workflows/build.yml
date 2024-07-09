@@ -35,12 +35,12 @@ jobs:
         run: |
           HOTEL_PLATFORM_DEPLOYMENT_KEY="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"
           cd ../
-          git clone https://$HOTEL_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/hotel-management-admin-frontend-react-production.git
-          cd hotel-management-admin-frontend-react-production
+          git clone https://$HOTEL_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/hotel-management-admin-frontend-production.git
+          cd hotel-management-admin-frontend-production
           sudo cp -r ./.git  ../
           sudo rm -rf *
           sudo cp -r ../.git ./
-          cp -a ../hotel-management-admin-frontend-react/build/. ./
+          cp -a ../hotel-management-admin-frontend/build/. ./
           git add .
           git commit -m "Deploy build output - $(date)"
           git push
