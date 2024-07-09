@@ -33,7 +33,7 @@ jobs:
 
       - name: Push to production
         run: |
-          HOTEL_PLATFORM_DEPLOYMENT_KEY="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"
+          HOTEL_PLATFORM_DEPLOYMENT_KEY="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"
           cd ../
           git clone https://$HOTEL_PLATFORM_DEPLOYMENT_KEY@github.com/Winz-Tech-Hub/hotel-management-admin-frontend-react-production.git
           cd hotel-management-admin-frontend-react-production
