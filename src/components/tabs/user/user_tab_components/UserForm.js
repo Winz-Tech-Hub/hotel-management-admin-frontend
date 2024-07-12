@@ -12,6 +12,7 @@ import {
   KITCHEN,
   RECEPTIONIST,
   STORE_KEEPER,
+  RESTAURANT_ATTENDANT,
   USER,
 } from '../../../../scripts/config/contants'
 
@@ -203,6 +204,7 @@ function UserForm(props) {
                 { name: 'BARTENDER', value: BARTENDER },
                 { name: 'KITCHEN', value: KITCHEN },
                 { name: 'STORE_KEEPER', value: STORE_KEEPER },
+                { name: 'RESTAURANT_ATTENDANT', value: RESTAURANT_ATTENDANT },
               ].map((pos) => (
                 <option key={pos.name} value={pos.value}>
                   {pos.name}

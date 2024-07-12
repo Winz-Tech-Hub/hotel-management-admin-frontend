@@ -4,7 +4,11 @@ import { useDataCount, useDataFieldSum } from '../../../../scripts/hooks/hookCol
 import accounting from 'accounting'
 
 const InfoCard = ({ style, className, name = null, field, datastore, title, query, type, typeSymbol }) => {
-  const [value] = datastore && field ? useDataFieldSum({ datastore, field, query }) : useDataCount({ datastore, query })
+  const [value] = datastore
+    ? field
+      ? useDataFieldSum({ datastore, field, query })
+      : useDataCount({ datastore, query })
+    : [0]
 
   return (
     <Card className={`${className ? className : ''} `} style={{ ...style }} title={title}>

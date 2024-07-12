@@ -128,3 +128,49 @@ export function camelCaseToTitleCase(camelCaseString) {
 
   return result
 }
+
+export const mongooseModelQueryObjectForDateRange = (path, dateRange) => {
+  let high = new Date()
+  let low = new Date()
+
+  switch (dateRange) {
+    case 'lastweek':
+      {
+        const d = new Date()
+        const todayWeekDay = d.getDay()
+        const todayDate = d.getDate()
+        const weekEnd = new Date()
+        weekEnd.setDate(todayDate - (todayWeekDay + 1))
+        const weekStart = new Date()
+        weekStart.setDate(weekEnd.getDate() - todayWeekDay)
+        high = weekEnd
+        low = weekStart
+      }
+      break
+
+    case 'lastmonth':
+      {
+        const monthEnd = new Date()
+        monthEnd.setDate(0)
+        const monthStart = new Date()
+        monthStart.setDate(1)
+        high = monthEnd
+        low = monthStart
+      }
+      break
+
+    case 'today':
+    default:
+      //Don't bother today's date is already set as high and low
+      break
+  }
+
+  //End of the day
+  high.setHours(23, 59, 59, 59)
+
+  //Start of the day
+  low.setHours(0, 0, 0, 0)
+
+  const query = { [path]: { $lte: high }, [path]: { $gte: low } }
+  return query
+}

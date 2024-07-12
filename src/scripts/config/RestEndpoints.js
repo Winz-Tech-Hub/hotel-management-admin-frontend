@@ -213,3 +213,7 @@ export const ALL_ITEMDISPENSE = '/item-dispense/all'
 export const ITEMCATEGORY = '/item-category/'
 export const CREATE_ITEMCATEGORY = '/item-category'
 export const ALL_ITEMCATEGORY = '/item-category/all'
+
+export const RESTAURANT_SALE = '/restaurant-sale/'
+export const CREATE_RESTAURANT_SALE = '/restaurant-sale'
+export const ALL_RESTAURANT_SALE = '/restaurant-sale/all'

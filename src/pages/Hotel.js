@@ -12,6 +12,7 @@ import ReferralCommission from '../components/tabs/hotel/ReferralCommission'
 import Item from '../components/tabs/hotel/Item'
 import ItemCategory from '../components/tabs/hotel/ItemCategory'
 import ItemDispense from '../components/tabs/hotel/ItemDispense'
+import RestaurantSale from '../components/tabs/hotel/RestaurantSale'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Hotel(__props) {
@@ -70,6 +71,12 @@ function Hotel(__props) {
                       label="Referral Commission"
                       icon="fas fa-archive"
                     />
+                    <NItem
+                      to="/hotel?tab=restaurant-sale"
+                      active={tab === 'referral-commission'}
+                      label="Referral Commission"
+                      icon="fas fa-archive"
+                    />
                   </Nav>
                 </Card.Footer>
               </Card>
@@ -93,6 +100,8 @@ function Hotel(__props) {
                     <ItemDispense />
                   ) : tab === 'referral-commission' ? (
                     <ReferralCommission />
+                  ) : tab === 'restaurant-sale' ? (
+                    <RestaurantSale />
                   ) : (
                     <Receipt />
                   )}

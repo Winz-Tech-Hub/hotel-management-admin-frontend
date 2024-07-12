@@ -54,9 +54,19 @@ export const RECEPTIONIST = 1
 export const BARTENDER = 2
 export const KITCHEN = 3
 export const STORE_KEEPER = 4
+export const RESTAURANT_ATTENDANT = 5
 
 //Payment method
 export const POS = 'pos'
 export const TRANSFER = 'transfer'
 export const CASH = 'cash'
 export const COMMISSION = 'commission'
+
+//Other
+export const DEPARTMENT_BAR = 'Bar'
+export const DEPARTMENT_STORE = 'Store'
+export const DEPARTMENT_RESTAURANT = 'Restaurant'
+
+//Booking
+export const NOT_BOOKED = ACTIVE
+export const BOOKED = PENDING

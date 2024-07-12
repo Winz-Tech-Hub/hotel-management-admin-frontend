@@ -15,6 +15,7 @@ import {
   KITCHEN,
   RECEPTIONIST,
   STORE_KEEPER,
+  RESTAURANT_ATTENDANT,
   USER,
 } from '../../../scripts/config/contants'
 
@@ -74,6 +75,8 @@ function UserTab() {
                       return 'Kitchen'
                     case STORE_KEEPER:
                       return 'Store Keeper'
+                    case RESTAURANT_ATTENDANT:
+                      return 'Restaurant Attendant'
                   }
                 })()}
               </div>

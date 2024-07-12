@@ -159,7 +159,7 @@ function ItemForm(props) {
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Name</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Price</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
@@ -171,7 +171,7 @@ function ItemForm(props) {
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Name</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Department</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"

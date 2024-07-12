@@ -109,7 +109,7 @@ function ItemCategoryForm(props) {
 
         <Col xs="12" sm="12" md="6" lg="6" className="p-1">
           <InputGroup>
-            <InputGroup.Text className="fw-bold">Description</InputGroup.Text>
+            <InputGroup.Text className="fw-bold">Department</InputGroup.Text>
             <Form.Control
               required={true}
               type="text"
