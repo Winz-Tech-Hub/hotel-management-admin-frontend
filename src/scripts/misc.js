@@ -129,7 +129,7 @@ export function camelCaseToTitleCase(camelCaseString) {
   return result
 }
 
-export const mongooseModelQueryObjectForDateRange = (path, dateRange) => {
+export const mongooseModelQueryObjectForDateRange = (path = 'createdAt.date', dateRange) => {
   let high = new Date()
   let low = new Date()
 
@@ -153,6 +153,7 @@ export const mongooseModelQueryObjectForDateRange = (path, dateRange) => {
         const monthEnd = new Date()
         monthEnd.setDate(0)
         const monthStart = new Date()
+	monthStart.setDate(0)
         monthStart.setDate(1)
         high = monthEnd
         low = monthStart
@@ -171,6 +172,6 @@ export const mongooseModelQueryObjectForDateRange = (path, dateRange) => {
   //Start of the day
   low.setHours(0, 0, 0, 0)
 
-  const query = { [path]: { $lte: high }, [path]: { $gte: low } }
+  const query = { [path]: { $lte: high,$gte: low } }
   return query
 }
